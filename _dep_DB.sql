@@ -46,32 +46,22 @@ alter table t_customer add index is_valid(is_valid);
 
 create table t_order (
 	idx int unsigned NOT NULL auto_increment,
-	shipTo varchar(32) NOT NULL,
-	depResellerId varchar(32) NOT NULL,
-	orderNumber varchar(32) NOT NULL,
-	orderDate datetime,
-	orderType varchar(8) NOT NULL,		-- _OR / _RE / _OV
-	customerId varchar(16) NOT NULL,
-	poNumber varchar(32),
-	shipDate datetime,
+	order_number varchar(32) NOT NULL,
+	order_type varchar(8) NOT NULL,		-- _OR / _RE / _OV
+	dep_customer_id varchar(16) NOT NULL,
+	dep_reseller_id varchar(32) NOT NULL,
+	ship_to varchar(32) NOT NULL,
+	po_number varchar(32),
+	order_date datetime,
+	ship_date datetime,
+	delivery_number varchar(32) NOT NULL,
+	device_id varchar(32) NOT NULL,
+	asset_tag varchar(32),
 	insert_date datetime default CURRENT_TIMESTAMP,
 	is_valid tinyint default 1,
 	PRIMARY KEY (idx)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-alter table t_order add index orderNumber(orderNumber);
-alter table t_order add index customerId(customerId);
-alter table t_order add index orderType(orderType);
-
-create table t_order_device (
-	idx int unsigned NOT NULL auto_increment,
-	t_order_idx int unsigned NOT NULL,
-	deliveryNumber varchar(32) NOT NULL,
-	deviceId varchar(32) NOT NULL,
-	assetTag varchar(32),
-	insert_date datetime default CURRENT_TIMESTAMP,
-	is_valid tinyint default 1,
-	PRIMARY KEY (idx)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-alter table t_order_device add index t_order_idx(t_order_idx);
-
+alter table t_order add index order_number(order_number);
+alter table t_order add index dep_customer_id(dep_customer_id);
+alter table t_order add index order_type(order_type);
 

@@ -9,6 +9,14 @@
 	include "header/_checkLogin.php";
 
 	$cntDB = DBCONNECT_start();
+
+	$search_text = "";
+	$whereQry = "";
+	$search_val = clearXSS(XSSfilter($_POST["search_val"]));
+	if ( strlen($search_val) > 0 ) {
+		$whereQry = "AND dep_customer_id LIKE '%$search_val%' OR skn_customer_id LIKE '%$search_val%' ";
+		$search_text = " - Search Result for '$search_val' ";
+	}
 ?>
 </head>
 
@@ -24,12 +32,22 @@
 		<div class="container">
 			<div class="col-lg-12 col-md-12 col-sm-12">
 				<div class="box-title margin-top-30">
-					<h2 class="size-20">DCM (DEP Customer Management)</h2>
+					<h2 class="size-20">DCM (DEP Customer Management) <?=$search_text?></h2>
 				</div>
 
-				<a href="customer_detail.php" onclick="popupOpen(event, this.href, 'customerNew', 800, 600)">
-				<button type="button" class="btn btn-sm btn-primary">New Customer</button>
-				</a><br /><br />
+				<form name='schCustomerForm' id='schCustomerForm' action="#" method="post" enctype="multipart/form-data">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-6">
+						<a href="customer_detail.php" onclick="popupOpen(event, this.href, 'customerNew', 800, 600)">
+						<button type="button" class="btn btn-sm btn-primary">New Customer</button>
+						</a>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 text-right">
+						<input type='text' required name='search_val' id='search_val' placeholder="SKN or DEP ID" style="height:35px;">
+						<button type='submit' class="btn btn-warning btn-sm size-15">Search</button>
+					</div>
+				</div>
+				</form>
 
 				<div class="table-responsive">
 					<table class="table table-bordered table-striped text-center">
@@ -46,7 +64,16 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_customer WHERE is_valid=1 ORDER BY company ASC";
+						$sql = "SELECT
+									*
+								FROM 
+									t_customer 
+								WHERE 1
+									AND is_valid = 1
+									$whereQry 
+								ORDER BY 
+									company ASC
+						";
 						$rsCustomer = x_SQL($sql, $cntDB);
 						while ( $rowCustomer = x_FETCH2($rsCustomer) ) {
 							?>

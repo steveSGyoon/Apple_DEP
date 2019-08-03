@@ -10,6 +10,7 @@
 
 	$cntDB = DBCONNECT_start();
 
+	$action_title = "New Customer";
 	$action = clearXSS(XSSfilter($_GET["action"]));
 
 	if ($action=="view" || $action=="edit") {
@@ -18,8 +19,11 @@
 		$sql = "SELECT * FROM t_customer WHERE idx=$idx";
 		$rowCustomer = x_FETCH($sql, $cntDB);
 
-		if ($action == "view")
+		$action_title = "Edit Customer";
+		if ($action == "view") {
+			$action_title = "View Customer";
 			$readonlyStr = "readonly";
+		}
 	}
 ?>
 </head>
@@ -32,7 +36,7 @@
 		<div class="container">
 			<div class="col-lg-12 col-md-12 col-sm-12 text-center">
 				<div class="box-title margin-top-30">
-					<h2 class="size-20">New Customer</h2>
+					<h2 class="size-20"><?=$action_title?></h2>
 				</div>
 
 				<form name='newCustomerForm' id='newCustomerForm' class="nomargin sky-form" action="" method="post" enctype="multipart/form-data">
@@ -117,7 +121,7 @@
 							}
 							else {
 								?>
-								<a href="Javascript:act_customer('add')">
+								<a href="Javascript:act_customer('new')">
 								<button type="button" class="btn btn-sm btn-primary">OK</button>
 								</a>
 								<?php
