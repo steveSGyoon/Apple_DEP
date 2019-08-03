@@ -109,51 +109,65 @@
 							echo "<font color='red'>[$iy] Error !! - $dep_customer_id[$iy] : no dep_customer_id. </font><br />";
 						}
 						else {
-							$chkSQL = "SELECT
-											count(*) AS row_cnt 
-										FROM 
-											t_order 
-										WHERE 1
-											AND order_number = '$order_number[$iy]'
-											AND order_type = '$order_type[$iy]'
-											AND dep_customer_id = '$dep_customer_id[$iy]'
-											AND dep_reseller_id = '$dep_reseller_id[$iy]'
-											AND ship_to = '$ship_to[$iy]'
-											AND po_number = '$po_number[$iy]'
-											AND order_date = '$order_date[$iy]'
-											AND ship_date = '$ship_date[$iy]'
-											AND delivery_number = '$delivery_number[$iy]'
-											AND device_id = '$device_id[$iy]'
-											AND asset_tag = '$asset_tag[$iy]'
-							";
-							//echo $chkSQL . "<br>";
-							$rowCheck2 = x_FETCH($chkSQL, $cntDB);
-							if ($rowCheck2[row_cnt] != 0) {
-								echo "<font color='red'>[$iy] Error !! - $dep_customer_id[$iy] : this row ia already exist. </font><br />";
+							if ( $order_type[$iy]!="OR" && $order_type[$iy]!="RE" && $order_type[$iy]!="OV" ) {
+								echo "<font color='red'>[$iy] Error !! - $order_type[$iy] : unknown order_type. </font><br />";
 							}
 							else {
-								if ( $order_type[$iy]!="OR" && $order_type[$iy]!="RE" && $order_type[$iy]!="OV" ) {
-									echo "<font color='red'>[$iy] Error !! - $order_type[$iy] : unknown prder_type. </font><br />";
-								}
-								else {
+								$chkSQL = "SELECT
+												count(*) AS row_cnt 
+											FROM 
+												t_order 
+											WHERE 1
+												AND order_number = '$order_number[$iy]'
+												AND order_type = '$order_type[$iy]'
+												AND dep_customer_id = '$dep_customer_id[$iy]'
+												AND dep_reseller_id = '$dep_reseller_id[$iy]'
+												AND ship_to = '$ship_to[$iy]'
+												AND po_number = '$po_number[$iy]'
+								";
+								$rowCheck2 = x_FETCH($chkSQL, $cntDB);
+
+								if ($rowCheck2[row_cnt] == 0) {
 									$sql = "INSERT INTO 
 												t_order
 												(order_number, order_type, dep_customer_id, dep_reseller_id, 
-												ship_to, po_number, order_date, ship_date,
-												delivery_number, device_id, asset_tag) 
+												ship_to, po_number, order_date, ship_date)
 											VALUES 
 												('$order_number[$iy]', '$order_type[$iy]', '$dep_customer_id[$iy]', '$dep_reseller_id[$iy]', 
-												'$ship_to[$iy]', '$po_number[$iy]', '$order_date[$iy]', '$ship_date[$iy]', 
-												'$delivery_number[$iy]', '$device_id[$iy]', '$asset_tag[$iy]')
+												'$ship_to[$iy]', '$po_number[$iy]', '$order_date[$iy]', '$ship_date[$iy]')
 									"; 
 									$rs = x_SQL($sql, $cntDB);
 									$order_idx = mysqli_insert_id($cntDB);
-	
-									if ($order_idx)
-										echo "[$iy] Success !! - $dep_customer_id[$iy] <br />";
-									else
-										echo "<font color='red'>[$iy] order_device Insert Error !! - $dep_customer_id[$iy] </font><br />";
 								}
+								else {
+									$chkSQL = "SELECT
+													idx
+												FROM 
+													t_order 
+												WHERE 1
+													AND order_number = '$order_number[$iy]'
+													AND order_type = '$order_type[$iy]'
+													AND dep_customer_id = '$dep_customer_id[$iy]'
+													AND dep_reseller_id = '$dep_reseller_id[$iy]'
+													AND ship_to = '$ship_to[$iy]'
+													AND po_number = '$po_number[$iy]'
+									";
+									$rowCheck3 = x_FETCH($chkSQL, $cntDB);
+									$order_idx = $rowCheck3[idx];
+								}
+
+								if ($order_idx) {
+									$sql = "INSERT INTO 
+												t_order_device
+												(t_order_idx, delivery_number, device_id, asset_tag) 
+											VALUES 
+												($order_idx, '$delivery_number[$iy]', '$device_id[$iy]', '$asset_tag[$iy]')
+									"; 
+									$rs = x_SQL($sql, $cntDB);
+									echo "[$iy] Success !! - $dep_customer_id[$iy] <br />";
+								}
+								else 
+									echo "<font color='red'>[$iy] order_device Insert Error !! - $dep_customer_id[$iy] </font><br />";
 							}
 						}
 					}
