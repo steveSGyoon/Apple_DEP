@@ -13,7 +13,8 @@ create table t_user (
 	_DUM tinyint unsigned default 0,	-- DEP user management
 	_ADMIN tinyint unsigned default 0,	-- admin = superuser
 	insert_date datetime default CURRENT_TIMESTAMP,
-	edit_date datetime,
+	edit_info_date datetime,
+	edit_permission_date datetime,
 	is_valid tinyint default 1,
 	PRIMARY KEY (idx)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -25,21 +26,20 @@ alter table t_user add index is_valid(is_valid);
 
 create table t_customer (
 	idx int unsigned NOT NULL auto_increment,
-	dep_id varchar(16) NOT NULL,
-	skn_id varchar(16) NOT NULL,
-	user_password varchar(255) NOT NULL,
-	customer_name varchar(64) NOT NULL,
-	manager varchar(64),
+	dep_customer_id varchar(16) NOT NULL,
+	skn_customer_id varchar(16) NOT NULL,
+	company varchar(64) NOT NULL,
 	phone varchar(16),
 	email varchar(255),
+	charge varchar(64),
 	note text,
 	insert_date datetime default CURRENT_TIMESTAMP,
 	edit_date datetime,
 	is_valid tinyint default 1,
 	PRIMARY KEY (idx)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-alter table t_customer add index dep_id(dep_id);
-alter table t_customer add index skn_id(skn_id);
+alter table t_customer add index dep_customer_id(dep_customer_id);
+alter table t_customer add index skn_customer_id(skn_customer_id);
 alter table t_customer add index is_valid(is_valid);
 
 
