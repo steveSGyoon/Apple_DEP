@@ -44,31 +44,6 @@ alter table t_customer add index is_valid(is_valid);
 
 
 
-create table t_order (
-	idx int unsigned NOT NULL auto_increment,
-	order_number varchar(32) NOT NULL,
-	order_type varchar(8) NOT NULL,		-- _OR / _RE / _OV
-	dep_customer_id varchar(16) NOT NULL,
-	dep_reseller_id varchar(32) NOT NULL,
-	ship_to varchar(32) NOT NULL,
-	po_number varchar(32),
-	order_date datetime,
-	ship_date datetime,
-	delivery_number varchar(32) NOT NULL,
-	device_id varchar(32) NOT NULL,
-	asset_tag varchar(32),
-	insert_date datetime default CURRENT_TIMESTAMP,
-	is_completed tinyint default 0,
-	is_valid tinyint default 1,
-	PRIMARY KEY (idx)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-alter table t_order add index order_number(order_number);
-alter table t_order add index order_type(order_type);
-alter table t_order add index delivery_number(delivery_number);
-alter table t_order add index is_completed(is_completed);
-alter table t_order add index is_valid(is_valid);
-
-
 
 create table t_order (
 	idx int unsigned NOT NULL auto_increment,
