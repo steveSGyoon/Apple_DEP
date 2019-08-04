@@ -75,9 +75,9 @@
 	</div>
 	<!-- /wrapper -->
 
-<?php
+	<?php
 	include "header/footerJS.php";
 	DBCLOSE_end($cntDB);
-?>
+	?>
 </body>
 </html>

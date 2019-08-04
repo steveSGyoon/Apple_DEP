@@ -9,19 +9,19 @@
 
 	$menuOR = "";
 	if ($_isOR)
-		$menuOR = "<li><a href='list.php?action=OR'>Order</a></li>";
+		$menuOR = "<li><a href='order.php'>Order</a></li>";
 
 	$menuRE = "";
 	if ($_isRE)
-		$menuRE = "<li><a href='list.php?action=OR'>Return</a></li>";
+		$menuRE = "<li><a href='return.php'>Return</a></li>";
 
 	$menuOV = "";
 	if ($_isOV)
-		$menuOV = "<li><a href='list.php?action=OR'>Override</a></li>";
+		$menuOV = "<li><a href='override.php'>Override</a></li>";
 
 	$menuVO = "";
 	if ($_isVO)
-		$menuVO = "<li><a href='list.php?action=OR'>Void</a></li>";
+		$menuVO = "<li><a href='void.php'>Void</a></li>";
 
 	$menuLU = "";
 	if ($_isLU)

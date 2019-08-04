@@ -10,6 +10,7 @@
 
 	$idx = clearXSS(XSSfilter($_GET["idx"]));
 	$action = $_POST["action"];
+
 	if ($action == "edit") {
 		$user_name = clearXSS(XSSfilter($_POST["user_name"]));
 		$user_password = clearXSS(XSSfilter($_POST["user_password"]));

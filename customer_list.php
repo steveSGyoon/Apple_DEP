@@ -23,10 +23,10 @@
 <body class="smoothscroll enable-animation">
 	<!-- wrapper -->
 	<div id="wrapper">
-<?php
+		<?php
 		//<!-- Top Menu -->
 		include "header/menuTop.php";
-?>
+		?>
 
 		<!-----------------------------------contents section-------------------------------------------------->
 		<div class="container">
@@ -105,16 +105,17 @@
 
 		<!-- footer -->
 		<footer id="footer">
-<?php
+			<?php
 			include "header/footer.php";
-?>
+			?>
 		</footer>
 
 	</div>
 	<!-- /wrapper -->
-<?php
+
+	<?php
 	include "subHeader/footerJS.php";
 	DBCLOSE_end($cntDB);
-?>
+	?>
 </body>
 </html>
