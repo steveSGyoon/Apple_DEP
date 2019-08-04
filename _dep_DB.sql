@@ -81,3 +81,11 @@ create table t_order_device (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 alter table t_order_device add index t_order_idx(t_order_idx);
 alter table t_order_device add index delivery_number(delivery_number);
+
+
+
+create table t_test (
+	idx int unsigned NOT NULL auto_increment,
+	insert_date datetime default CURRENT_TIMESTAMP,
+	PRIMARY KEY (idx)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
