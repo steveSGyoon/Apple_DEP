@@ -1,8 +1,8 @@
 <?php
-	include "header/header_php.php";
+	include "header/header_DB.php";
 	include "header/functionsY.php";
 	include "header/_class-phpass.php";
-	include "header/_checkLogin.php";
+	//include "header/_checkLogin.php";
 
 	$cntDB = DBCONNECT_start();
 

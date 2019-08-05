@@ -56,9 +56,11 @@ create table t_order (
 	po_number varchar(32),
 	order_date datetime,
 	ship_date datetime,
-	status tinyint default 0,			-- 0:cretae, 1:apply, 2:completed
+	status tinyint default 0,			-- 0:cretae, 1:applied, 2:completed
 	is_return tinyint default 0,
 	is_override tinyint default 0,
+	applied_date datetime,
+	completed_date datetime,
 	insert_date datetime default CURRENT_TIMESTAMP,
 	is_valid tinyint default 1,
 	PRIMARY KEY (idx)
@@ -81,6 +83,21 @@ create table t_order_device (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 alter table t_order_device add index t_order_idx(t_order_idx);
 alter table t_order_device add index delivery_number(delivery_number);
+
+create table t_api_enroll_result (
+	idx int unsigned NOT NULL auto_increment,
+	t_order_idx int unsigned NOT NULL,
+	is_success tinyint default 0,
+	deviceEnrollmentTransactionId varchar(128),
+	errorCode varchar(16),
+	errorMessage text,
+	insert_date datetime default CURRENT_TIMESTAMP,
+	is_valid tinyint default 1,
+	PRIMARY KEY (idx)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+alter table t_order_api_result add index t_order_idx(t_order_idx);
+alter table t_order_api_result add index is_valid(is_valid);
+
 
 
 

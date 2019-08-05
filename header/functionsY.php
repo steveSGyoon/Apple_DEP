@@ -134,261 +134,12 @@ function UpFileExecute($UpFileName, $UpFiles)
 	return($returnVal);
 }
 
+
 /***********************************************************************************************/
 /*                                                                                             */
-/*             FORM making - text relatings, file, selection and so on...                      */
+/*             XSS Keyword 필터링                                                              */
 /*                                                                                             */
 /***********************************************************************************************/
-function formMakeInput($columnSet, $labelText, $inputType, $icoAppend, $inputName, $toolTip, $requiredSet, $crtValue)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	$classForm = " class='form-control' ";
-	if ($inputType == "password")
-		$classForm = " class='err' ";
-
-	$icoAppendForm = "";
-	if ($icoAppend)
-		$icoAppendForm = "<i class='ico-append fa $icoAppend'></i>";
-
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<label class='input margin-bottom-10'>
-				$icoAppendForm
-				<input type='$inputType' name='$inputName' id='$inputName' $requiredSet $classForm value='$crtValue'>
-				<b class='tooltip tooltip-bottom-right'>$toolTip</b>
-			</label>
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-function formMakeInputAddress($columnSet, $crtValue0, $crtValue1, $crtValue2)
-{
-	$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-	$columnDivEnd = "</div>";
-	$returnString = "
-		$columnDivStart
-			<label>주소 *</label>
-			<input type='text' name='rcvPostcode' id='rcvPostcode' value='$crtValue0' required placeholder='우편번호' readonly> -
-			<input type='button' onclick='execDaumPostcode()' value='우편번호 찾기'><br />
-			<input type='text' name='rcvAddr1' id='rcvAddr1' class='form-control margin-top-10' value='$crtValue1' required placeholder='주소'>
-			<input type='text' name='rcvAddr2' id='rcvAddr2' class='form-control margin-top-10' value='$crtValue2' required placeholder='상세주소'>
-		$columnDivEnd";
-
-	return $returnString;
-}
-function formMakeInputAddressReadOnly($columnSet, $crtValue0, $crtValue1, $crtValue2)
-{
-	$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-	$columnDivEnd = "</div>";
-	$returnString = "
-		$columnDivStart
-			<label>주소 *</label>
-			<input type='text' name='rcvPostcode' id='rcvPostcode' class='form-control' value='우편번호 : $crtValue0' readonly>
-			<input type='text' name='rcvAddr1' id='rcvAddr1' class='form-control margin-top-10' value='$crtValue1' readonly>
-			<input type='text' name='rcvAddr2' id='rcvAddr2' class='form-control margin-top-10' value='$crtValue2' readonly>
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-function formMakeInputMasked($columnSet, $labelText, $icoAppend, $inputName, $toolTip, $requiredSet, $dataFormat, $placeHolder, $crtValue)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	///(^[0-9\-_]+$)/;
-	$onKeyEventString = "onkeyup=\"if (event.keyCode!=8 && event.keyCode!=46 && event.keyCode!=37 && event.keyCode!=39) this.value=this.value.replace(/[^0-9]/g,'')\"";
-	if ( strpos($dataFormat, "-") )
-		$onKeyEventString = "onkeyup=\"if (event.keyCode!=8 && event.keyCode!=46 && event.keyCode!=37 && event.keyCode!=39) this.value=this.value.replace(/[^0-9\-]/g,'')\"";
-
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<label class='input margin-bottom-10'>
-				<i class='ico-append fa $icoAppend'></i>
-				<input type='$inputType' name='$inputName' id='$inputName' $requiredSet $classForm value='$crtValue' $onKeyEventString>
-				<b class='tooltip tooltip-bottom-right'>$toolTip</b>
-			</label>
-		$columnDivEnd";
-
-	/*
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<label class='input margin-bottom-10'>
-				<i class='ico-append fa $icoAppend'></i>
-				<input type='text' class='form-control masked' name='$inputName' id='$inputName' data-format='$dataFormat' data-placeholder='0' placeholder='$placeHolder' $requiredSet value='$crtValue'>
-				<b class='tooltip tooltip-bottom-right'>$toolTip</b>
-			</label>
-		$columnDivEnd";
-	*/
-
-	return $returnString;
-}
-
-function formMakeInputDate($columnSet, $labelText, $inputName, $crtValue)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<input type='text' name='$inputName' id='$inputName' class='form-control datepicker' data-format='yyyy-mm-dd' data-lang='en' data-RTL='false' value='$crtValue'>
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-
-function formMakeInputFile($columnSet, $labelText, $inputName, $imageYes)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	if ($imageYes)	$imageYes = "<small class='text-muted block'>Max file size: 3Mb (jpg/gif/png)</small>";
-	else			$imageYes = "<small class='text-muted block'>Max file size: 3Mb</small>";
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<input class='custom-file-upload' type='file' name='$inputName' id='$inputName' data-btn-text='Select a File' />
-			$imageYes
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-function formMakeStepper($columnSet, $labelText, $inputName, $onChange)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	if ($onChange) {
-		$onChangeStr1 = "onChange=\"" . $onChange . "(this.value)\"";
-		$onChangeStr2 = "onClick=\"" . $onChange . "(this.value)\"";
-	}
-
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<label class='input margin-bottom-10'>
-				<input type='text' name='$inputName' id='$inputName' value='1' min='1' max='1000' class='form-control stepper' $onChangeStr1, $onChangeStr2>
-			</label>
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-function formMakeInputDummy($columnSet, $labelText, $inputName, $crtValue)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	$classForm = " class='form-control' ";
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<label class='input margin-bottom-10'>
-				<i class='ico-append fa-money'></i>
-				<input type='text' name='$inputName' id='$inputName' $classForm value='$crtValue' readonly>
-			</label>
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-function formMakeTextArea($columnSet, $labelText, $placeHolder, $rowS, $textAreaName, $requiredSet, $crtValue)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<div class='fancy-form'>
-				<textarea $requiredSet placeholder='$placeHolder' name='$textAreaName' id='$textAreaName' rows='$rowS' class='form-control word-count' data-maxlength='10000' data-info='textarea-words-info'>$crtValue</textarea>
-				<i class='fa fa-comments''><!-- icon --></i>
-				<span class='fancy-hint size-11 text-muted'>
-					<strong>Hint:</strong> 10000 words allowed!
-					<span class='pull-right'>
-						<span id='textarea-words-info'>0/10000</span> Words
-					</span>
-				</span>
-			</div>
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-function formMakeSelect($columnSet, $labelText, $selectName, $selectValue, $selectDisplay, $crtSelection, $required, $onChange)
-{
-	$columnDivStart = "";
-	$columnDivEnd = "";
-	if ($columnSet) {
-		$columnDivStart = "<div class='col-md-$columnSet col-sm-$columnSet'>";
-		$columnDivEnd = "</div>";
-	}
-
-	if ($onChange)
-		$onChangeStr = "onChange=\"" . $onChange . "(this.value)\"";
-
-	$returnString = "
-		$columnDivStart
-			<label>$labelText</label>
-			<div class='fancy-form fancy-form-select'>
-				<select $required class='form-control select' name='$selectName' id='$selectName' $onChangeStr>";
-					for ($i=0; $i<count($selectValue); $i++) {
-						if ($crtSelection == $selectValue[$i])
-							$returnString .= "<option value='$selectValue[$i]' selected> $selectDisplay[$i] </option>";
-						else
-							$returnString .= "<option value='$selectValue[$i]'> $selectDisplay[$i] </option>";
-					}
-					$returnString .= "
-				</select>
-				<i class='fancy-arrow'></i>
-			</div>
-		$columnDivEnd";
-
-	return $returnString;
-}
-
-
-
-
-
-// XSS Keyword 필터링
 function XSSfilter($str)
 {
 	return $str; 
@@ -435,6 +186,81 @@ function clearXSS($str) {
 		return $str; 
 	}
 }
+
+
+/***********************************************************************************************/
+/*                                                                                             */
+/*             XSS Keyword 필터링                                                              */
+/*                                                                                             */
+/***********************************************************************************************/
+function doHttpPost($url = null, $postData = null) {
+	if(!$url||!$postData){
+		return NULL;
+	}
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+	curl_setopt($cchurl, CURLOPT_TIMEOUT, 30);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response  = curl_exec($ch);
+	curl_close($ch);
+
+	return $response;
+}
+
+function make_order_json_string($order_idx, $cntDB) {
+	$sql = "SELECT * FROM t_order WHERE 1 AND idx = $order_idx";
+	$rowOrder = x_FETCH($sql, $cntDB);
+
+	$post_data = [];
+	$orders = [];
+	$devices = [];
+	$deliveries = [];
+	
+	$sql = "SELECT * FROM t_order WHERE 1 AND idx = $order_idx";
+	$rowOrder = x_FETCH($sql, $cntDB);
+	
+	$post_data['requestContext']['shipTo'] = $rowOrder[ship_to];
+	$post_data['requestContext']['timeZone'] = "-540";
+	$post_data['requestContext']['langCode'] = "ko";
+	
+	$post_data['transactionId'] = $rowOrder[transaction_id];
+	$post_data['depResellerId'] = $rowOrder[dep_reseller_id];
+	
+	$orders[0]['orderNumber'] = $rowOrder[order_number];
+	$orders[0]['orderDate'] = $rowOrder[order_date];
+	$orders[0]['orderType'] = $rowOrder[order_type];
+	$orders[0]['customerId'] = $rowOrder[dep_customer_id];
+	$orders[0]['poNumber'] = $rowOrder[po_number];
+	
+	$id = 0;
+	$sql = "SELECT DISTINCT(delivery_number) FROM t_order_device WHERE t_order_idx = $order_idx";
+	$rs = x_SQL($sql, $cntDB);
+	while ( $row = x_FETCH2($rs) ) {
+		$device_ix = 0;
+		$sql = "SELECT * FROM t_order_device WHERE 1 AND t_order_idx = $order_idx AND delivery_number = '$row[delivery_number]'";
+		$rsDevice = x_SQL($sql, $cntDB);
+		while ( $rowDevice = x_FETCH2($rsDevice) ) {
+			$devices[$device_ix]['deviceId'] = $rowDevice[device_id];
+			$devices[$device_ix]['assetTag'] = $rowDevice[asset_tag];
+	
+			$deliveries[$id]['deliveryNumber'] = $rowDevice[delivery_number];
+			$deliveries[$id]['shipDate'] = $rowOrder[ship_date];
+			$deliveries[$id]['devices'] = $devices;
+	
+			$device_ix++;
+		}
+		$orders[0]['deliveries'] = $deliveries;
+		$id++;
+	}
+	$post_data['orders'] = $orders;
+	
+	return json_encode($post_data);
+}
+
 
 ?>
 
