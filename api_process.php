@@ -38,17 +38,19 @@
 				$ret['result_msg'] .= $order_idx . ":success\n";
 			}
 			else {
+				$errorMessage = "";
+				$errorCode = $result['errorCode'];
 				$transactionId = $result['transactionId'];
-				$errorMessage = $result['errorMessage'] . " " . $result['enrollDevicesResponse']['statusCode'];
-				if ($errorMessage == " ")
+				$errorMessage = $result['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
+				if ($errorMessage == "")
 					$errorMessage = "multiple error";
 	
 				// t_api_enroll_result
 				$sql = "INSERT INTO 
 							t_api_enroll_result
-							( t_order_idx, is_success, deviceEnrollmentTransactionId, errorMessage )
+							( t_order_idx, is_success, errorCode, transactionId, errorMessage )
 						VALUES 
-							( $order_idx, 0, '$deviceEnrollmentTransactionId', '$errorMessage' )
+							( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage' )
 				"; 
 				$rs = x_SQL($sql, $cntDB0);
 	
