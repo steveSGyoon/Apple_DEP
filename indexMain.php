@@ -41,7 +41,7 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'OR' AND status != 0 ORDER BY order_date DESC";
+						$sql = "SELECT * FROM t_order WHERE order_type='OR' AND status!=0 AND is_void=0 AND is_valid=1 ORDER BY order_date DESC";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
 							if ($row[is_valid] == 0) {
@@ -90,7 +90,7 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'RE' AND status != 0 ORDER BY order_date DESC";
+						$sql = "SELECT * FROM t_order WHERE order_type='RE' AND status!=0 AND is_void=0 AND is_valid=1 ORDER BY order_date DESC";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
 							if ($row[is_valid] == 0) {
@@ -123,6 +123,55 @@
 				</div>
 			</div>
 			<div class='row'>					
+			<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="box-title margin-top-30">
+						<h2 class="size-20">OVERRIDE Status</h2>
+					</div>
+
+					<!-- TABLE 4 -->
+					<table class="table table-bordered table-striped text-center">
+						<thead>
+							<tr class="info">
+								<th class="text-center">DEP Customer ID</th>
+								<th class="text-center">SKN Order No.</th>
+								<th class="text-center">Date</th>
+								<th class="text-center">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						<?php
+						$sql = "SELECT * FROM t_order WHERE order_type='OV' AND status!=0 AND is_void=0 AND is_valid=1 ORDER BY order_date DESC";
+						$rs = x_SQL($sql, $cntDB);
+						while ( $row = x_FETCH2($rs) ) {
+							if ($row[is_valid] == 0) {
+								$status = "
+									<a href='api_result.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"failView\", 500, 450)'>
+									<button type='button' class='btn btn-sm btn-default'>Fail</button>
+									</a>";
+							}
+							else {
+								if ($row[status] == 1)
+									$status = "In Progress";
+								else if ($row[status] == 2)
+									$status = "Success";
+								else
+									$status = "Unknown";
+							}
+							?>
+							<tr bgcolor='#ffffff'>
+								<td><?=$row[dep_customer_id]?></td>
+								<td><?=$row[order_number]?></td>
+								<td><?=$row[order_number]?></td>
+								<td><?=$status?></td>
+							</tr>
+							<?php
+						}
+						?>
+						</tbody>
+					</table><br />
+					<!-- TABLE 4 -->
+				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6">
 					<div class="box-title margin-top-30">
 						<h2 class="size-20">VOID Status</h2>
@@ -141,23 +190,15 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'VO' AND status != 0 ORDER BY order_date DESC";
+						$sql = "SELECT * FROM t_order WHERE status!=0 AND is_void=1 AND is_valid=0 ORDER BY order_date DESC";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
-							if ($row[is_valid] == 0) {
-								$status = "
-									<a href='api_result.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"failView\", 500, 450)'>
-									<button type='button' class='btn btn-sm btn-default'>Fail</button>
-									</a>";
-							}
-							else {
-								if ($row[status] == 1)
-									$status = "In Progress";
-								else if ($row[status] == 2)
-									$status = "Success";
-								else
-									$status = "Unknown";
-							}
+							if ($row[status] == 1)
+								$status = "In Progress";
+							else if ($row[status] == 2)
+								$status = "Success";
+							else
+								$status = "Unknown";
 							?>
 							<tr bgcolor='#ffffff'>
 								<td><?=$row[dep_customer_id]?></td>
@@ -171,55 +212,6 @@
 						</tbody>
 					</table><br />
 					<!-- TABLE 3 -->
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6">
-					<div class="box-title margin-top-30">
-						<h2 class="size-20">OVERRIDE Status</h2>
-					</div>
-
-					<!-- TABLE 4 -->
-					<table class="table table-bordered table-striped text-center">
-						<thead>
-							<tr class="info">
-								<th class="text-center">DEP Customer ID</th>
-								<th class="text-center">SKN Order No.</th>
-								<th class="text-center">Date</th>
-								<th class="text-center">Status</th>
-							</tr>
-						</thead>
-						<tbody>
-
-						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'OV' AND status != 0 ORDER BY order_date DESC";
-						$rs = x_SQL($sql, $cntDB);
-						while ( $row = x_FETCH2($rs) ) {
-							if ($row[is_valid] == 0) {
-								$status = "
-									<a href='api_result.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"failView\", 500, 450)'>
-									<button type='button' class='btn btn-sm btn-default'>Fail</button>
-									</a>";
-							}
-							else {
-								if ($row[status] == 1)
-									$status = "In Progress";
-								else if ($row[status] == 2)
-									$status = "Success";
-								else
-									$status = "Unknown";
-							}
-							?>
-							<tr bgcolor='#ffffff'>
-								<td><?=$row[dep_customer_id]?></td>
-								<td><?=$row[order_number]?></td>
-								<td><?=$row[order_number]?></td>
-								<td><?=$status?></td>
-							</tr>
-							<?php
-						}
-						?>
-						</tbody>
-					</table><br />
-					<!-- TABLE 4 -->
 				</div>
 			</div>
 		</div>

@@ -50,7 +50,7 @@
 							<tbody>
 
 							<?php
-							$return_idx = 0;
+							$enroll_idx = 0;
 							$sql = "SELECT
 										dep_order.*,
 										customer.skn_customer_id AS skn_customer_id,
@@ -61,17 +61,18 @@
 									WHERE 1
 										AND dep_order.order_type = 'RE'
 										AND dep_order.status = 0
+										AND dep_order.is_void = 0
 										AND dep_order.is_valid = 1
 									ORDER BY 
 										dep_order.order_date DESC
 							";
 							$rs = x_SQL($sql, $cntDB);
 							while ( $row = x_FETCH2($rs) ) {
-								$return_name = "return_" . $return_idx;
+								$enroll_name = "enroll_" . $enroll_idx;
 								?>
 								<tr bgcolor='#ffffff'>
 									<td>
-										<input type='checkbox' name='<?=$return_name?>' id='<?=$return_name?>' value='<?=$row[order_number]?>'>
+										<input type='checkbox' name='<?=$enroll_name?>' id='<?=$enroll_name?>' value='<?=$row[idx]?>'>
 									</td>
 									<td><?=$row[dep_customer_id]?></td>
 									<td><?=$row[skn_customer_id]?></td>
@@ -84,17 +85,15 @@
 									</td>
 								</tr>
 								<?php
-								$return_idx++;
+								$enroll_idx++;
 							}
 							?>
 							</tbody>
 						</table><br />
 						<div class="col-lg-12 col-md-12 col-sm-12 text-center">
-							<input type='hidden' name='return_cnt' id='return_cnt' value='<?=$return_idx?>'>
+							<input type='hidden' name='enroll_cnt' id='enroll_cnt' value='<?=$enroll_idx?>'>
 
-							<a href="Javascript:do_return_action()">
-							<button type="button" class="btn btn-sm btn-primary">Return Devices</button>
-							</a>
+                            <button type="button" class="btn btn-sm btn-primary on-action-enroll start-enroll" id="enroll_btn">Return Devices</button>
 						</div>
 					</div>
 				</form>
@@ -118,41 +117,78 @@
 	?>
 
 	<script type="text/javascript">
-		function do_order_action() {
-			var params = new FormData();
+		function btn_ui_set_enabled(btn){
+			return btn.removeClass("btn-default").addClass("btn-primary");
+		}
 
-			//Form data
-			var form_data = $("#orderForm").serializeArray();
-			$.each(form_data, function (key, input) {
-				params.append(input.name, input.value);
-			});
-			//console.log(form_data);
+		function btn_ui_set_disabled(btn){
+			return btn.removeClass("btn-primary").addClass("btn-default");
+		}
 
-			$.ajax({
-				url:'return_process.php',
-				type:'POST',
-				contentType: false,
-				cache: false,             
-				processData:false, 
-				data:params,
+		$(document).ready(function(){
+			bind_buttons();
+		});
 
-				success:function(reponse){
-					switch (reponse['result'])
-					{
-						case "fail":
-							alert(reponse['error_msg']);
-							break;
-						case "success":
-							alert(reponse['result_msg']);
-							window.location.reload();
-							break;
-						default:
-							alert(reponse['result']);
-							break;
+		function bind_buttons(){
+			$(".on-action-enroll").on('click', function(e) {
+				var is_checked = false;
+				var enroll_cnt = document.getElementById('enroll_cnt');
+				for (id_enroll=0; id_enroll<enroll_cnt.value; id_enroll++) {
+					enroll_name = "enroll_" + id_enroll;
+					var orders = document.getElementById(enroll_name);
+					if ( orders.checked ) {
+						is_checked = true;
+						break;
 					}
-				},
-				error:function(request,status,error){
-					alert("status : " + status);
+				}
+
+				if (is_checked) {
+					var enroll_btn = document.getElementById('enroll_btn');
+					enroll_btn.disabled = true;
+
+					e.preventDefault();
+					btn_ui_set_disabled($(".start-enroll"));
+
+					var params = new FormData();
+					var form_data = $("#orderForm").serializeArray();
+					$.each(form_data, function (key, input) {
+						params.append(input.name, input.value);
+					});
+					//console.log(form_data);
+
+					$.ajax({
+						url:'api_process.php',
+						type:'POST',
+						contentType: false,
+						cache: false,             
+						processData:false, 
+						data:params,
+
+						success:function(reponse){
+							switch (reponse['result'])
+							{
+								case "fail":
+									alert(reponse['error_msg']);
+									break;
+								case "success":
+									alert(reponse['result_msg']);
+									window.location.reload();
+									break;
+								default:
+									alert(reponse['result']);
+									break;
+							}
+							enroll_btn.disabled = false;
+							btn_ui_set_enabled($(".start-enroll"));
+						},
+						error:function(request,status,error){
+							alert("status : " + status);
+						}
+					});
+
+				}
+				else {
+					alert("Please check at least one order.")
 				}
 			});
 		}

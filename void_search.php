@@ -59,7 +59,6 @@
 						<tbody>
 
 						<?php
-						$enroll_idx = 0;
 						$sql = "SELECT
 									dep_order.*,
 									customer.skn_customer_id AS skn_customer_id,
@@ -68,6 +67,8 @@
 									t_order AS dep_order
 									LEFT JOIN t_customer AS customer ON customer.dep_customer_id = dep_order.dep_customer_id 
 								WHERE 1
+									AND dep_order.status = 2
+									AND dep_order.is_void = 0
 									AND dep_order.is_valid = 1
 									$whereQry
 								ORDER BY 
@@ -97,7 +98,6 @@
 								</td>
 							</tr>
 							<?php
-							$enroll_idx++;
 						}
 						?>
 						</tbody>

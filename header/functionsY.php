@@ -211,9 +211,16 @@ function doHttpPost($url = null, $postData = null) {
 	return $response;
 }
 
-function make_order_json_string($order_idx, $cntDB) {
+function make_order_json_string($order_idx, $void_ok, $cntDB) {
 	$sql = "SELECT * FROM t_order WHERE 1 AND idx = $order_idx";
 	$rowOrder = x_FETCH($sql, $cntDB);
+
+	$order_date = substr($rowOrder[order_date], 0, 10) . "T" . substr($rowOrder[order_date], 11, 8) . "Z";
+	$ship_date = substr($rowOrder[ship_date], 0, 10) . "T" . substr($rowOrder[ship_date], 11, 8) . "Z";
+
+	$order_type = $rowOrder[order_type];
+	if ($void_ok == 1)
+		$order_type = "VD";
 
 	$post_data = [];
 	$orders = [];
@@ -231,8 +238,8 @@ function make_order_json_string($order_idx, $cntDB) {
 	$post_data['depResellerId'] = $rowOrder[dep_reseller_id];
 	
 	$orders[0]['orderNumber'] = $rowOrder[order_number];
-	$orders[0]['orderDate'] = $rowOrder[order_date];
-	$orders[0]['orderType'] = $rowOrder[order_type];
+	$orders[0]['orderDate'] = $order_date;
+	$orders[0]['orderType'] = $order_type;
 	$orders[0]['customerId'] = $rowOrder[dep_customer_id];
 	$orders[0]['poNumber'] = $rowOrder[po_number];
 	
@@ -248,7 +255,7 @@ function make_order_json_string($order_idx, $cntDB) {
 			$devices[$device_ix]['assetTag'] = $rowDevice[asset_tag];
 	
 			$deliveries[$id]['deliveryNumber'] = $rowDevice[delivery_number];
-			$deliveries[$id]['shipDate'] = $rowOrder[ship_date];
+			$deliveries[$id]['shipDate'] = $ship_date;
 			$deliveries[$id]['devices'] = $devices;
 	
 			$device_ix++;

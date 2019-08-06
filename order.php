@@ -61,6 +61,7 @@
 									WHERE 1
 										AND dep_order.order_type = 'OR'
 										AND dep_order.status = 0
+										AND dep_order.is_void = 0
 										AND dep_order.is_valid = 1
 									ORDER BY 
 										dep_order.order_date DESC

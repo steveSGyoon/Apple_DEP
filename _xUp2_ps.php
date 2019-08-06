@@ -126,6 +126,7 @@
 												AND order_type = 'OR'
 												AND is_return = 0
 												AND is_override = 0
+												AND status = 0
 												AND order_number = '$order_number[$iy]'
 									";
 									$rowCheck2 = x_FETCH($chkSQL, $cntDB);

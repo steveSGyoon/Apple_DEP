@@ -54,13 +54,13 @@ create table t_order (
 	dep_reseller_id varchar(32) NOT NULL,
 	ship_to varchar(32) NOT NULL,
 	po_number varchar(32),
-	order_date datetime,
-	ship_date datetime,
+	order_date timestamp,
+	ship_date timestamp,
 	status tinyint default 0,			-- 0:cretae, 1:applied, 2:completed
-	is_return tinyint default 0,
-	is_override tinyint default 0,
+	is_void tinyint default 0,
 	applied_date datetime,
 	completed_date datetime,
+	edit_date datetime,
 	insert_date datetime default CURRENT_TIMESTAMP,
 	is_valid tinyint default 1,
 	PRIMARY KEY (idx)
@@ -69,6 +69,7 @@ alter table t_order add index order_number(order_number);
 alter table t_order add index transaction_id(transaction_id);
 alter table t_order add index order_type(order_type);
 alter table t_order add index status(status);
+alter table t_order add index is_void(is_void);
 alter table t_order add index is_valid(is_valid);
 
 create table t_order_device (
@@ -104,6 +105,7 @@ create table t_api_check_result (
 	t_order_idx int unsigned NOT NULL,
 	is_success tinyint default 0,
     deviceEnrollmentTransactionId varchar(128),
+	completed_on timestamp,
 	transactionId varchar(128),
 	errorCode varchar(16),
 	errorMessage text,

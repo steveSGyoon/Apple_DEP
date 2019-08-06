@@ -41,7 +41,6 @@
 						<tbody>
 
 						<?php
-						$enroll_idx = 0;
 						$sql = "SELECT
 									dep_order.*,
 									customer.skn_customer_id AS skn_customer_id,
@@ -52,6 +51,7 @@
 								WHERE 1
 									AND dep_order.order_type = 'OV'
 									AND dep_order.status = 0
+									AND dep_order.is_void = 0
 									AND dep_order.is_valid = 1
 								ORDER BY 
 									dep_order.order_date DESC
@@ -71,7 +71,6 @@
 								</td>
 							</tr>
 							<?php
-							$enroll_idx++;
 						}
 						?>
 						</tbody>

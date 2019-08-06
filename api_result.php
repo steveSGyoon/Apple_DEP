@@ -14,9 +14,14 @@
 	$sql = "SELECT
 				*
 			FROM 
-				t_api_enroll_result
+				t_api_check_result
 			WHERE 1
 				AND t_order_idx = $idx
+				AND is_success = 0
+			ORDER BY
+				insert_date DESC
+			LIMIT
+				0, 1
 	";
 	$rowOrder = x_FETCH($sql, $cntDB);
 ?>
@@ -46,7 +51,7 @@
 							</tr>
 							<tr>
 								<td class="info">Transaction ID</td>
-								<td><?=$rowOrder[transactionId]?></td>
+								<td><?=$rowOrder[deviceEnrollmentTransactionId]?></td>
 							</tr>
 						</table>
 					</div>

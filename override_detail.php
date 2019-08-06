@@ -87,13 +87,16 @@
 					</div>
 				</div>
 				<div class="row text-center">
-					<a href="Javascript:close_window()">
-					<button type="button" class="btn btn-sm btn-default margin-right-10">Cancel</button>
-					</a>
+					<form name='orderForm' id='orderForm' action="#" method="post" enctype="multipart/form-data">
+						<a href="Javascript:close_window()">
+						<button type="button" class="btn btn-sm btn-default margin-right-10">Cancel</button>
+						</a>
 
-					<a href="Javascript:do_order_action()">
-					<button type="button" class="btn btn-sm btn-primary">Override</button>
-					</a>
+						<input type='hidden' name='enroll_cnt' id='enroll_cnt' value='1'>
+						<input type='hidden' name='enroll_0' id='enroll_0' value='<?=$idx?>'>
+						<input type='hidden' name='old_order_idx' id='old_order_idx' value='<?=$rowBefore[idx]?>'>
+						<button type="button" class="btn btn-sm btn-primary on-action-enroll start-enroll" id="enroll_btn">Override</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -111,41 +114,64 @@
 			self.close();
 		}
 
-		function do_order_action() {
-			var params = new FormData();
+		function btn_ui_set_enabled(btn){
+			return btn.removeClass("btn-default").addClass("btn-primary");
+		}
 
-			//Form data
-			var form_data = $("#orderForm").serializeArray();
-			$.each(form_data, function (key, input) {
-				params.append(input.name, input.value);
-			});
-			//console.log(form_data);
+		function btn_ui_set_disabled(btn){
+			return btn.removeClass("btn-primary").addClass("btn-default");
+		}
 
-			$.ajax({
-				url:'order_process.php',
-				type:'POST',
-				contentType: false,
-				cache: false,             
-				processData:false, 
-				data:params,
+		$(document).ready(function(){
+			bind_buttons();
+		});
 
-				success:function(reponse){
-					switch (reponse['result'])
-					{
-						case "fail":
-							alert(reponse['error_msg']);
-							break;
-						case "success":
-							alert(reponse['result_msg']);
-							window.location.reload();
-							break;
-						default:
-							alert(reponse['result']);
-							break;
-					}
-				},
-				error:function(request,status,error){
-					alert("status : " + status);
+		function bind_buttons(){
+			$(".on-action-enroll").on('click', function(e) {
+				if (confirm("Do you really want to run Override?")) {
+					var enroll_btn = document.getElementById('enroll_btn');
+					enroll_btn.disabled = true;
+
+					e.preventDefault();
+					btn_ui_set_disabled($(".start-enroll"));
+
+					var params = new FormData();
+					var form_data = $("#orderForm").serializeArray();
+					$.each(form_data, function (key, input) {
+						params.append(input.name, input.value);
+					});
+					//console.log(form_data);
+
+					$.ajax({
+						url:'api_process.php',
+						type:'POST',
+						contentType: false,
+						cache: false,             
+						processData:false, 
+						data:params,
+
+						success:function(reponse){
+							switch (reponse['result'])
+							{
+								case "fail":
+									alert(reponse['error_msg']);
+									break;
+								case "success":
+									alert(reponse['result_msg']);
+									opener.location.reload();
+									self.close();
+									break;
+								default:
+									alert(reponse['result']);
+									break;
+							}
+							enroll_btn.disabled = false;
+							btn_ui_set_enabled($(".start-enroll"));
+						},
+						error:function(request,status,error){
+							alert("status : " + status);
+						}
+					});
 				}
 			});
 		}
