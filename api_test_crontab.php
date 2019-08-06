@@ -5,7 +5,7 @@
 	$cntDB = DBCONNECT_start();
 
 	$sql = "INSERT INTO t_test ( insert_date ) VALUES ( now() )"; 
-	$rs = x_SQL($sql, $cntDB0);
+	$rs = x_SQL($sql, $cntDB);
 
 	DBCLOSE_end($cntDB);
 ?>

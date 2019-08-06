@@ -39,11 +39,11 @@
 					VALUES 
 						( $order_idx, 1, '$deviceEnrollmentTransactionId' )
 			"; 
-			$rs = x_SQL($sql, $cntDB0);
+			$rs = x_SQL($sql, $cntDB);
 
 			// t_order - status change to 1
 			$sql = "UPDATE t_order SET status=2, completed_date=now() WHERE idx = $order_idx"; 
-			$rs = x_SQL($sql, $cntDB0);
+			$rs = x_SQL($sql, $cntDB);
 		}
 		else {
 			$errorMessage = "";
@@ -60,7 +60,7 @@
 					VALUES 
 						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage' )
 			"; 
-			$rs = x_SQL($sql, $cntDB0);
+			$rs = x_SQL($sql, $cntDB);
 		}
 	}
 
