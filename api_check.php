@@ -1,41 +1,68 @@
 <?php
 	include "header/header_DB.php";
 	include "header/functionsY.php";
-	include "class/classHttpClientUtil.php";
 
 	$cntDB = DBCONNECT_start();
 
-	$api_post = new HttpClientUtil();
-
-	$sql = "SELECT * FROM t_order WHERE 1 AND status = 1";
+	$sql = "SELECT
+				deporder.*,
+				enroll_result.deviceEnrollmentTransactionId AS deviceEnrollmentTransactionId
+			FROM 
+				t_order AS deporder
+				LEFT JOIN t_api_enroll_result AS enroll_result ON enroll_result.t_order_idx = deporder.idx
+			WHERE 1 
+				AND deporder.status = 1
+	";
 	$rsOrder = x_SQL($sql, $cntDB);
 	while ( $rowOrder = x_FETCH2($rsOrder) ) {
+		$order_idx = $rowOrder[idx];
+
 		$post_data = [];
-		
 		$post_data['requestContext']['shipTo'] = $rowOrder[ship_to];
 		$post_data['requestContext']['timeZone'] = "-540";
 		$post_data['requestContext']['langCode'] = "ko";
-		
 		$post_data['depResellerId'] = $rowOrder[dep_reseller_id];
-		$post_data['deviceEnrollmentTransactionId'] = $rowOrder[transaction_id];
-		
+		$post_data['deviceEnrollmentTransactionId'] = $rowOrder[deviceEnrollmentTransactionId];
 		$paramMap = json_encode($post_data);
 
-		$reponse = $api_post->doPost($sandbox_check_url, $paramMap);
+		$response = doHttpPost($sandbox_check_url, $paramMap);
+		$result = json_decode($response, true);
+
+		$status = $result['statusCode'];
+		if ($status == "COMPLETE") {
+			$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionId'];
+
+			// t_api_check_result
+			$sql = "INSERT INTO 
+						t_api_check_result
+						( t_order_idx, is_success, deviceEnrollmentTransactionId )
+					VALUES 
+						( $order_idx, 1, '$deviceEnrollmentTransactionId' )
+			"; 
+			$rs = x_SQL($sql, $cntDB0);
+
+			// t_order - status change to 1
+			$sql = "UPDATE t_order SET status=2, completed_date=now() WHERE idx = $order_idx"; 
+			$rs = x_SQL($sql, $cntDB0);
+		}
+		else {
+			$errorMessage = "";
+			$errorCode = $result['errorCode'];
+			$transactionId = $result['transactionId'];
+			$errorMessage = $result['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
+			if ($errorMessage == "")
+				$errorMessage = "multiple error";
+
+			// t_api_check_result
+			$sql = "INSERT INTO 
+						t_api_check_result
+						( t_order_idx, is_success, errorCode, transactionId, errorMessage )
+					VALUES 
+						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage' )
+			"; 
+			$rs = x_SQL($sql, $cntDB0);
+		}
 	}
 
 	DBCLOSE_end($cntDB);
-
-/*
-	{
-		"requestContext": {
-			"shipTo": "0000052010",
-			"timeZone": "420",
-			"langCode": "en"
-		},
-		"depResellerId": "16FCE4A0",
-		"deviceEnrollmentTransactionId": "9acc1cf5-e41d-44d4-a066-78162a389da2_1413529391461"
-	}
-*/
-
 ?>

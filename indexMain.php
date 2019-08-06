@@ -41,12 +41,15 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'OR' AND dep_order.status != 0
-								ORDER BY dep_order.order_date DESC";
+						$sql = "SELECT * FROM t_order WHERE order_type = 'OR' AND status != 0 ORDER BY order_date DESC";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
-							if ($row[is_valid] == 0)
-								$status = "Fail";
+							if ($row[is_valid] == 0) {
+								$status = "
+									<a href='api_result.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"failView\", 500, 450)'>
+									<button type='button' class='btn btn-sm btn-default'>Fail</button>
+									</a>";
+							}
 							else {
 								if ($row[status] == 1)
 									$status = "In Progress";
@@ -87,12 +90,15 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'RE' AND dep_order.status != 0
-								ORDER BY dep_order.order_date DESC";
+						$sql = "SELECT * FROM t_order WHERE order_type = 'RE' AND status != 0 ORDER BY order_date DESC";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
-							if ($row[is_valid] == 0)
-								$status = "Fail";
+							if ($row[is_valid] == 0) {
+								$status = "
+									<a href='api_result.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"failView\", 500, 450)'>
+									<button type='button' class='btn btn-sm btn-default'>Fail</button>
+									</a>";
+							}
 							else {
 								if ($row[status] == 1)
 									$status = "In Progress";
@@ -135,12 +141,15 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'VO' AND dep_order.status != 0
-								ORDER BY dep_order.order_date DESC";
+						$sql = "SELECT * FROM t_order WHERE order_type = 'VO' AND status != 0 ORDER BY order_date DESC";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
-							if ($row[is_valid] == 0)
-								$status = "Fail";
+							if ($row[is_valid] == 0) {
+								$status = "
+									<a href='api_result.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"failView\", 500, 450)'>
+									<button type='button' class='btn btn-sm btn-default'>Fail</button>
+									</a>";
+							}
 							else {
 								if ($row[status] == 1)
 									$status = "In Progress";
@@ -181,12 +190,15 @@
 						<tbody>
 
 						<?php
-						$sql = "SELECT * FROM t_order WHERE order_type = 'OV' AND dep_order.status != 0
-								ORDER BY dep_order.order_date DESC";
+						$sql = "SELECT * FROM t_order WHERE order_type = 'OV' AND status != 0 ORDER BY order_date DESC";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
-							if ($row[is_valid] == 0)
-								$status = "Fail";
+							if ($row[is_valid] == 0) {
+								$status = "
+									<a href='api_result.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"failView\", 500, 450)'>
+									<button type='button' class='btn btn-sm btn-default'>Fail</button>
+									</a>";
+							}
 							else {
 								if ($row[status] == 1)
 									$status = "In Progress";

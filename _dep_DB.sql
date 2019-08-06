@@ -88,6 +88,7 @@ create table t_api_enroll_result (
 	idx int unsigned NOT NULL auto_increment,
 	t_order_idx int unsigned NOT NULL,
 	is_success tinyint default 0,
+    deviceEnrollmentTransactionId varchar(128),
 	transactionId varchar(128),
 	errorCode varchar(16),
 	errorMessage text,
@@ -98,6 +99,20 @@ create table t_api_enroll_result (
 alter table t_api_enroll_result add index t_order_idx(t_order_idx);
 alter table t_api_enroll_result add index is_valid(is_valid);
 
+create table t_api_check_result (
+	idx int unsigned NOT NULL auto_increment,
+	t_order_idx int unsigned NOT NULL,
+	is_success tinyint default 0,
+    deviceEnrollmentTransactionId varchar(128),
+	transactionId varchar(128),
+	errorCode varchar(16),
+	errorMessage text,
+	insert_date datetime default CURRENT_TIMESTAMP,
+	is_valid tinyint default 1,
+	PRIMARY KEY (idx)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+alter table t_api_check_result add index t_order_idx(t_order_idx);
+alter table t_api_check_result add index is_valid(is_valid);
 
 
 
