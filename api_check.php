@@ -29,8 +29,8 @@
 		$result = json_decode($response, true);
 
 //echo $response;
-//{ "deviceEnrollmentTransactionID" : "21719cf9-c7a1-42ee-aa56-890d47339628_1565082925632", "checkTransactionErrorResponse" : [ { "errorMessage" : "등록 요청 진행 중. 기기 등록 프로그램 거래 ID의 등록이 아직 진행 중입니다. 나중에 다시 확인하십시오.", "errorCode" : "DEP-ERR-4003" } ] }
 /*
+{ 
 { 
 	"deviceEnrollmentTransactionID" : "fbf74c2f-dd4b-4bfe-b0db-b1e8f99c4031_1565084411614", 
 	"checkTransactionErrorResponse" : [ 
@@ -40,6 +40,47 @@
 		} 
 	] 
 }
+
+{
+	"deviceEnrollmentTransactionID":"a08974a5-afb1-4f29-9cdc-1e81599bf076_1565085227908",
+	"statusCode":"COMPLETE",
+	"orders":[
+		{
+			"orderNumber":"ORDER_900123",
+			"orderPostStatus":"COMPLETE",
+			"deliveries":[
+				{
+					"deliveryNumber":"D1.2",
+					"deliveryPostStatus":"COMPLETE",
+					"devices":[
+						{
+							"devicePostStatus":"COMPLETE",
+							"deviceId":"33645004YAM"
+						},
+						{
+							"devicePostStatus":"COMPLETE",
+							"deviceId":"33645006YAM"
+						}
+					]
+				}
+			]
+		}
+	],
+	"completedOn":"2019-08-06T10:10:27Z"
+}
+{
+	"deviceEnrollmentTransactionID":"5f4275a8-b9ba-4986-b990-9ac85fe36901_1565085940759",
+	"statusCode":"COMPLETE",
+	"orders":[
+		{
+			"orderNumber":"ORDER_900123",
+			"orderPostStatus":"DEP-ERR-OR-4113",
+			"orderPostStatusMessage":"Void order invalid. The void (VD) order type is invalid because it contains delivery detail. Remove the deliveries and resubmit the request."
+		}
+	],
+	"completedOn":"2019-08-06T10:10:28Z"
+}
+
 */
 		$status = $result['statusCode'];
 		$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionID'];
