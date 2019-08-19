@@ -10,7 +10,7 @@ require("./lib/NicepayLite.php");
 */ 
 $nicepay                  = new NicepayLite;
 $MerchantKey              = "EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg=="; // 상점키
-$nicepay->m_NicepayHome   = "c:\log";               // 로그 디렉토리 설정
+$nicepay->m_NicepayHome   = "/home/manager/dep/_nicepayLog";               // 로그 디렉토리 설정
 $nicepay->m_ActionType    = "PYO";                  // ActionType
 $nicepay->m_charSet       = "UTF8";                 // 인코딩
 $nicepay->m_ssl           = "true";                 // 보안접속 여부
