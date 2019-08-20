@@ -4,6 +4,12 @@
 
 	$cntDB = DBCONNECT_start();
 
+	///////////////////////////////// for testing  //////////////////////
+	$sql = "INSERT INTO t_test (insert_date) VALUES (now())";
+	$rs = x_SQL($sql, $cntDB);
+	///////////////////////////////// for testing  //////////////////////
+
+	
 	$sql = "SELECT
 				deporder.*,
 				enroll_result.deviceEnrollmentTransactionId AS deviceEnrollmentTransactionId
