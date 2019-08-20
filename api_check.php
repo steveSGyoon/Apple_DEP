@@ -89,9 +89,9 @@
 			// t_api_check_result
 			$sql = "INSERT INTO 
 						t_api_check_result
-						( t_order_idx, is_success, deviceEnrollmentTransactionId, completed_on )
+						( t_order_idx, is_success, deviceEnrollmentTransactionId, completed_on, response )
 					VALUES 
-						( $order_idx, 1, '$deviceEnrollmentTransactionId', '$completed_on' )
+						( $order_idx, 1, '$deviceEnrollmentTransactionId', '$completed_on', \"$response\" )
 			"; 
 			$rs = x_SQL($sql, $cntDB);
 
@@ -109,9 +109,9 @@
 				// t_api_check_result
 				$sql = "INSERT INTO 
 							t_api_check_result
-							( t_order_idx, is_success, errorCode, deviceEnrollmentTransactionId, errorMessage )
+							( t_order_idx, is_success, errorCode, deviceEnrollmentTransactionId, errorMessage, response )
 						VALUES 
-							( $order_idx, 0, '$errorCode', '$deviceEnrollmentTransactionId', '$errorMessage' )
+							( $order_idx, 0, '$errorCode', '$deviceEnrollmentTransactionId', '$errorMessage', \"$response\" )
 				"; 
 				$rs = x_SQL($sql, $cntDB);
 			}
@@ -124,9 +124,9 @@
 					// t_api_check_result
 					$sql = "INSERT INTO 
 								t_api_check_result
-								( t_order_idx, is_success, errorCode, transactionId, errorMessage )
+								( t_order_idx, is_success, errorCode, transactionId, errorMessage, response )
 							VALUES 
-								( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage' )
+								( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response\" )
 					"; 
 					$rs = x_SQL($sql, $cntDB);
 				}

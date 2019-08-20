@@ -43,9 +43,9 @@
 			// t_api_enroll_result
 			$sql = "INSERT INTO 
 						t_api_enroll_result
-						( t_order_idx, is_success, deviceEnrollmentTransactionId )
+						( t_order_idx, is_success, deviceEnrollmentTransactionId, response)
 					VALUES 
-						( $order_idx, 1, '$deviceEnrollmentTransactionId' )
+						( $order_idx, 1, '$deviceEnrollmentTransactionId', \"$response\")
 			"; 
 			$rs = x_SQL($sql, $cntDB0);
 
@@ -66,9 +66,9 @@
 			// t_api_enroll_result
 			$sql = "INSERT INTO 
 						t_api_enroll_result
-						( t_order_idx, is_success, errorCode, transactionId, errorMessage )
+						( t_order_idx, is_success, errorCode, transactionId, errorMessage, response )
 					VALUES 
-						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage' )
+						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response\" )
 			"; 
 			$rs = x_SQL($sql, $cntDB0);
 
