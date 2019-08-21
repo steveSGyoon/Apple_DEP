@@ -33,7 +33,7 @@
 		// OV or VO case - make is_valid=0 for existing order 
 
 		$paramMap = make_order_json_string($order_idx, $void_ok, $cntDB0);
-		$response = doHttpPost($sandbox_enroll_url, $paramMap);
+		$response = doHttpPost($enroll_url, $paramMap);
 		$result = json_decode($response, true);
 
 		$status = $result['enrollDevicesResponse']['statusCode'];
@@ -86,7 +86,7 @@
 	$order_idx = 5;
 	$paramMap = make_order_json_string($order_idx, $cntDB0);
 	echo $paramMap;
-	$response = doHttpPost($sandbox_enroll_url, $paramMap);
+	$response = doHttpPost($enroll_url, $paramMap);
 	echo $response;
 	echo "<br><br><br>";
 	echo json_decode($response);

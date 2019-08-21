@@ -31,7 +31,7 @@
 		$post_data['deviceEnrollmentTransactionId'] = $rowOrder[deviceEnrollmentTransactionId];
 		$paramMap = json_encode($post_data);
 
-		$response = doHttpPost($sandbox_check_url, $paramMap);
+		$response = doHttpPost($check_url, $paramMap);
 		$result = json_decode($response, true);
 
 //echo $response;
