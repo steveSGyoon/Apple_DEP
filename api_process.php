@@ -9,9 +9,11 @@
 	$ret['result_msg'] = "result message = \n";
 
 	$enroll_cnt = $_POST["enroll_cnt"];
+	$enroll_cnt = 1;
 	for ($i=0; $i<$enroll_cnt; $i++) {
 		$enroll_name = "enroll_" . $i;
 		$order_idx = $_POST[$enroll_name];
+		$order_idx = 5;
 
 		// OV or VO case - make is_valid=0 for existing order 
 		$old_order_idx = $_POST["old_order_idx"];
@@ -70,7 +72,8 @@
 					VALUES 
 						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response\" )
 			"; 
-			$rs = x_SQL($sql_r, $cntDB0);
+			$rs_r = x_SQL($sql_r, $cntDB0);
+			echo $sql_r . "<br>";
 
 			// t_order - make this order invalid
 			$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
