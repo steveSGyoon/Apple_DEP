@@ -64,13 +64,13 @@
 				$errorMessage = "multiple error";
 
 			// t_api_enroll_result
-			$sql = "INSERT INTO 
+			$sql_r = "INSERT INTO 
 						t_api_enroll_result
 						( t_order_idx, is_success, errorCode, transactionId, errorMessage, response )
 					VALUES 
 						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response\" )
 			"; 
-			$rs = x_SQL($sql, $cntDB0);
+			$rs = x_SQL($sql_r, $cntDB0);
 
 			// t_order - make this order invalid
 			$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
@@ -78,7 +78,7 @@
 
 			$ret['result'] = "fail";
 			$ret['error_msg'] .= $order_idx . ":param error\n";
-			$ret['sql'] = $sql;
+			$ret['sql'] = $sql_r;
 		}
 	}
 
