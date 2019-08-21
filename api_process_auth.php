@@ -3,29 +3,41 @@
 
 
 
-$pemfile = "/etc/ssl/certs/GRX-0001192168.ACC1914.Test.AppleCare.chain.pem";
-$keyfile = "/home/sknb2b/dep_test_key/privatekey.key";
-$url = "https://api-applecareconnect-ept.apple.com/enroll-service/1.0/check-transaction-status";
+$certFile = "/etc/ssl/certs/GRX-0001192168.ACC1914.Test.AppleCare.chain.pem";
+$keyFile = "/home/sknb2b/dep_test_key/privatekey.key";
+$actualUrl = "https://api-applecareconnect-ept.apple.com/enroll-service/1.0/check-transaction-status";
 $requestXml = "";
-$chainfo = "/etc/ssl/certs/ca-certificates.crt";
+$caFile = "/etc/ssl/certs/ca-certificates.crt";
 
-$ch = curl_init(); 
-curl_setopt($ch, CURLOPT_URL, $url); 
-curl_setopt($ch, CURLOPT_VERBOSE, 1); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1); 
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); 
-curl_setopt($ch, CURLOPT_FAILONERROR, 1); 
-curl_setopt($ch, CURLOPT_SSLCERT, $pemfile); 
-curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM'); 
-curl_setopt($ch, CURLOPT_SSLKEY, $keyfile); 
-curl_setopt($ch, CURLOPT_CAINFO, $chainfo); 
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-//curl_setopt($ch, CURLOPT_POSTFIELDS, $requestXml);
+// $ch = curl_init(); 
+// curl_setopt($ch, CURLOPT_URL, $actualUrl); 
+// //curl_setopt($ch, CURLOPT_VERBOSE, 1); 
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1); 
+// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); 
+// curl_setopt($ch, CURLOPT_FAILONERROR, 1); 
+// curl_setopt($ch, CURLOPT_SSLCERT, $certFile); 
+// curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM'); 
+// curl_setopt($ch, CURLOPT_SSLKEY, $keyFile); 
+// curl_setopt($ch, CURLOPT_CAINFO, $caFile); 
+// curl_setopt($ch, CURLOPT_POST, 1);
+// curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+// //curl_setopt($ch, CURLOPT_POSTFIELDS, $requestXml);
+// $ret = curl_exec($ch);
+
+// var_dump($ret);
+
+
+$ch = curl_init($actualUrl);
+curl_setopt($ch, CURLOPT_URL, $actualUrl);
+curl_setopt($ch, CURLOPT_SSLKEY, $keyFile);
+curl_setopt($ch, CURLOPT_CAINFO, $caFile);
+curl_setopt($ch, CURLOPT_SSLCERT, $certFile);
 $ret = curl_exec($ch);
 
 var_dump($ret);
+
+
 
 /*
 
