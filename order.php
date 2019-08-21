@@ -169,6 +169,7 @@
 							{
 								case "fail":
 									alert(reponse['error_msg']);
+									alert(reponse['sql']);
 									break;
 								case "success":
 									alert(reponse['result_msg']);

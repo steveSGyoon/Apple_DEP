@@ -76,7 +76,9 @@
 			$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
 			$rs = x_SQL($sql, $cntDB0);
 
-			$ret['result_msg'] .= $order_idx . ":param error\n";
+			$ret['result'] = "fail";
+			$ret['error_msg'] .= $order_idx . ":param error\n";
+			$ret['sql'] = $sql;
 		}
 	}
 
