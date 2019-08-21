@@ -85,12 +85,12 @@
 				$errorMessage = "multiple error";
 
 			// t_api_enroll_result
-			$response = str_replace( "\"","'", $response );
+			$response0 = str_replace( "\"","'", $response );
 			$sql = "INSERT INTO 
 						t_api_enroll_result
 						( t_order_idx, is_success, errorCode, transactionId, errorMessage, response )
 					VALUES 
-						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response\" )
+						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
 			"; 
 			$rs = x_SQL($sql, $cntDB0);
 
@@ -99,7 +99,7 @@
 			//$rs = x_SQL($sql, $cntDB0);
 
 			$ret['result'] = "fail";
-			$ret['error_msg'] .= $order_idx . ":param error\n";
+			$ret['error_msg'] .= $order_idx . ":" . $response . ":param error\n";
 		}
 	}
 
