@@ -9,11 +9,9 @@
 	$ret['result_msg'] = "result message = \n";
 
 	$enroll_cnt = $_POST["enroll_cnt"];
-	$enroll_cnt = 1;
 	for ($i=0; $i<$enroll_cnt; $i++) {
 		$enroll_name = "enroll_" . $i;
 		$order_idx = $_POST[$enroll_name];
-		$order_idx = 5;
 
 		// OV or VO case - make is_valid=0 for existing order 
 		$old_order_idx = $_POST["old_order_idx"];
@@ -66,22 +64,21 @@
 				$errorMessage = "multiple error";
 
 			// t_api_enroll_result
-			$sql_r = "INSERT INTO 
+			$response = str_replace( "\"","'", $response );
+			$sql = "INSERT INTO 
 						t_api_enroll_result
 						( t_order_idx, is_success, errorCode, transactionId, errorMessage, response )
 					VALUES 
 						( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response\" )
 			"; 
-			$rs_r = x_SQL($sql_r, $cntDB0);
-			echo $sql_r . "<br>";
+			$rs = x_SQL($sql, $cntDB0);
 
 			// t_order - make this order invalid
-			$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
-			$rs = x_SQL($sql, $cntDB0);
+			//$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
+			//$rs = x_SQL($sql, $cntDB0);
 
 			$ret['result'] = "fail";
 			$ret['error_msg'] .= $order_idx . ":param error\n";
-			$ret['sql'] = $sql_r;
 		}
 	}
 

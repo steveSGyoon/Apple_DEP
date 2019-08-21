@@ -113,6 +113,7 @@
 				$errorMessage = $error_result[0]['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
 	
 				// t_api_check_result
+				$response = str_replace( "\"","'", $response );
 				$sql = "INSERT INTO 
 							t_api_check_result
 							( t_order_idx, is_success, errorCode, deviceEnrollmentTransactionId, errorMessage, response )
