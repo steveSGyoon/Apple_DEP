@@ -94,6 +94,7 @@
 							<input type='hidden' name='enroll_cnt' id='enroll_cnt' value='<?=$enroll_idx?>'>
 
                             <button type="button" class="btn btn-sm btn-primary on-action-enroll start-enroll" id="enroll_btn">Enroll Devices</button>
+							<span id='xxx'></span>
 						</div>
 					</div>
 				</form>
@@ -168,6 +169,7 @@
 							switch (reponse['result'])
 							{
 								case "fail":
+									document.getElementById("xxx").innerHTML = reponse['sql'];
 									alert(reponse['error_msg']);
 									alert(reponse['sql']);
 									break;
