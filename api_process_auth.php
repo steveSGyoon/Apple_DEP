@@ -30,6 +30,7 @@ $caFile = "/etc/ssl/certs/ca-certificates.crt";
 
 $ch = curl_init($actualUrl);
 curl_setopt($ch, CURLOPT_URL, $actualUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 curl_setopt($ch, CURLOPT_SSLKEY, $keyFile);
 curl_setopt($ch, CURLOPT_CAINFO, $caFile);
 curl_setopt($ch, CURLOPT_SSLCERT, $certFile);
