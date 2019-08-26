@@ -98,9 +98,9 @@
 			$response0 = str_replace( "\"","'", $response );
 			$sql = "INSERT INTO 
 						t_api_check_result
-						( t_order_idx, is_success, deviceEnrollmentTransactionId, completed_on, response )
+						( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, completed_on, response )
 					VALUES 
-						( $order_idx, 1, '$deviceEnrollmentTransactionId', '$completed_on', \"$response0\" )
+						( $order_idx, 1, '$paramMap', '$deviceEnrollmentTransactionId', '$completed_on', \"$response0\" )
 			"; 
 			$rs = x_SQL($sql, $cntDB);
 
@@ -109,21 +109,33 @@
 			$rs = x_SQL($sql, $cntDB);
 		}
 		else {
+			// t_order - status change to 1
+			$sql = "UPDATE t_order SET status=0, completed_date=now() WHERE idx = $order_idx"; 
+			$rs = x_SQL($sql, $cntDB);
+
 			if ($deviceEnrollmentTransactionId) {
+				/*
 				$error_result = $result['checkTransactionErrorResponse'];
 				
 				$errorCode = $error_result[0]['errorCode'];
 				$errorMessage = $error_result[0]['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
-	
+				*/
+				$rt_orders = $result['orders'];
+
 				// t_api_check_result
 				$response0 = str_replace( "\"","'", $response );
-				$sql = "INSERT INTO 
-							t_api_check_result
-							( t_order_idx, is_success, errorCode, deviceEnrollmentTransactionId, errorMessage, response )
-						VALUES 
-							( $order_idx, 0, '$errorCode', '$deviceEnrollmentTransactionId', '$errorMessage', \"$response0\" )
-				"; 
-				$rs = x_SQL($sql, $cntDB);
+				for ($io=0; $io<count($rt_orders); $io++) {
+					$errorCode = $rt_orders[$io]['orderPostStatus'];
+					$errorMessage = $rt_orders[$io]['orderPostStatusMessage'];
+
+					$sql = "INSERT INTO 
+								t_api_check_result
+								( t_order_idx, is_success, send_data, errorCode, deviceEnrollmentTransactionId, errorMessage, response )
+							VALUES 
+								( $order_idx, 0, '$paramMap', '$errorCode', '$deviceEnrollmentTransactionId', '$errorMessage', \"$response0\" )
+					"; 
+					$rs = x_SQL($sql, $cntDB);
+				}
 			}
 			else {
 				$errorCode = $result['errorCode'];
@@ -135,9 +147,9 @@
 					$response0 = str_replace( "\"","'", $response );
 					$sql = "INSERT INTO 
 								t_api_check_result
-								( t_order_idx, is_success, errorCode, transactionId, errorMessage, response )
+								( t_order_idx, is_success, send_data, errorCode, transactionId, errorMessage, response )
 							VALUES 
-								( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
+								( $order_idx, 0, '$paramMap', '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
 					"; 
 					$rs = x_SQL($sql, $cntDB);
 				}
