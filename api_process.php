@@ -62,7 +62,7 @@
 			$transactionId = $result['transactionId'];
 			$errorMessage = $result['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
 			if ($errorMessage == "")
-				$errorMessage = "multiple error";
+				$errorMessage = "multiple error - " . count($result);
 
 			// t_api_enroll_result
 			$response0 = str_replace( "\"","'", $response );
