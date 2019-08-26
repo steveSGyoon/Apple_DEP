@@ -40,13 +40,15 @@
 		$status = $result['enrollDevicesResponse']['statusCode'];
 		if ($status == "SUCCESS") {
 			$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionId'];
+			$transactionId = $result['transactionId'];
+			$response0 = str_replace( "\"","'", $response );
 
 			// t_api_enroll_result
 			$sql = "INSERT INTO 
 						t_api_enroll_result
-						( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, response)
+						( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, transactionId, response)
 					VALUES 
-						( $order_idx, 1, '$paramMap', '$deviceEnrollmentTransactionId', \"$response\")
+						( $order_idx, 1, '$paramMap', '$deviceEnrollmentTransactionId', '$transactionId', \"$response0\")
 			"; 
 			$rs = x_SQL($sql, $cntDB0);
 
@@ -86,46 +88,7 @@
 
 	
 /*
-
-
-	{
-		"requestContext":
-			{"shipTo":
-				"0001192168",
-				"timeZone":
-				"-540",
-				"langCode":"ko"
-			},
-		"transactionId":"20190821-1566351180-3981",
-		"depResellerId":"F7B93D0",
-		"orders":
-			[{
-				"orderNumber":"ORDER-T1",
-				"orderDate":"2019-08-21T11:19:06Z",
-				"orderType":"OR",
-				"customerId":"10000",
-				"poNumber":"",
-				"deliveries":
-					[{
-						"deliveryNumber":"SELF",
-						"shipDate":"2017-01-02T10:00:00Z",
-						"devices":
-							[{
-								"deviceId":"C01W103JHG7F",
-								"assetTag":""
-							},
-							{
-								"deviceId":"C01W103KHG7F",
-								"assetTag":""
-							},
-							{
-								"deviceId":"C01W103LHG7F",
-								"assetTag":""
-							}]
-					}]
-			}]
-	}
-
+	{'enrollDeviceErrorResponse':{'errorCode':'GRX-50001','errorMessage':'이 작업을 수행할 수 있는 역할이 할당되지 않았습니다.'}}
 
 
 
