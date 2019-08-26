@@ -113,6 +113,9 @@
 			$sql = "UPDATE t_order SET status=0, completed_date=now() WHERE idx = $order_idx"; 
 			$rs = x_SQL($sql, $cntDB);
 
+			$sql = "UPDATE t_api_enroll_result SET is_valid=0 WHERE t_order_idx = $order_idx"; 
+			$rs = x_SQL($sql, $cntDB);
+
 			if ($deviceEnrollmentTransactionId) {
 				/*
 				$error_result = $result['checkTransactionErrorResponse'];
