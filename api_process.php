@@ -86,6 +86,50 @@
 
 	
 /*
+
+
+	{
+		"requestContext":
+			{"shipTo":
+				"0001192168",
+				"timeZone":
+				"-540",
+				"langCode":"ko"
+			},
+		"transactionId":"20190821-1566351180-3981",
+		"depResellerId":"F7B93D0",
+		"orders":
+			[{
+				"orderNumber":"ORDER-T1",
+				"orderDate":"2019-08-21T11:19:06Z",
+				"orderType":"OR",
+				"customerId":"10000",
+				"poNumber":"",
+				"deliveries":
+					[{
+						"deliveryNumber":"SELF",
+						"shipDate":"2017-01-02T10:00:00Z",
+						"devices":
+							[{
+								"deviceId":"C01W103JHG7F",
+								"assetTag":""
+							},
+							{
+								"deviceId":"C01W103KHG7F",
+								"assetTag":""
+							},
+							{
+								"deviceId":"C01W103LHG7F",
+								"assetTag":""
+							}]
+					}]
+			}]
+	}
+
+
+
+
+
 	$order_idx = 5;
 	$paramMap = make_order_json_string($order_idx, $cntDB0);
 	echo $paramMap;
