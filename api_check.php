@@ -106,8 +106,14 @@
 			$rs = x_SQL($sql, $cntDB);
 
 			// t_order - status change to 1
-			$sql = "UPDATE t_order SET status=2, completed_date=now() WHERE idx = $order_idx"; 
-			$rs = x_SQL($sql, $cntDB);
+			if ($rowOrder['is_void'] == 1) {
+				$sql = "UPDATE t_order SET status=2, completed_date=now() WHERE idx = $order_idx"; 
+				$rs = x_SQL($sql, $cntDB);
+			}
+			else {
+				$sql = "UPDATE t_order SET status=2, completed_date=now(), is_valid=0 WHERE idx = $order_idx"; 
+				$rs = x_SQL($sql, $cntDB);
+			}
 		}
 		else {
 			// t_order - status change to 1

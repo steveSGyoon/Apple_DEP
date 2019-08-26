@@ -25,7 +25,8 @@
 			$rs = x_SQL($sql, $cntDB0);
 		}
 		else if ($void_ok) {
-			$sql = "UPDATE t_order SET status=1, is_void=1, is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
+			//$sql = "UPDATE t_order SET status=1, is_void=1, is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
+			$sql = "UPDATE t_order SET status=1, is_void=1, edit_date=now() WHERE idx = $order_idx"; 
 			$rs = x_SQL($sql, $cntDB0);
 		}
 
