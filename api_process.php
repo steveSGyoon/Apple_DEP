@@ -40,10 +40,9 @@
 		$status = $result['enrollDevicesResponse']['statusCode'];
 		if ($status == "SUCCESS") {
 			$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionId'];
-			$transactionId = $result['transactionId'];
-			$response0 = str_replace( "\"","'", $response );
 
 			// t_api_enroll_result
+			$response0 = str_replace( "\"","'", $response );
 			$sql = "INSERT INTO 
 						t_api_enroll_result
 						( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, transactionId, response)

@@ -95,11 +95,12 @@
 		$completed_on = $result['completedOn'];
 		if ($status == "COMPLETE") {
 			// t_api_check_result
+			$response0 = str_replace( "\"","'", $response );
 			$sql = "INSERT INTO 
 						t_api_check_result
 						( t_order_idx, is_success, deviceEnrollmentTransactionId, completed_on, response )
 					VALUES 
-						( $order_idx, 1, '$deviceEnrollmentTransactionId', '$completed_on', \"$response\" )
+						( $order_idx, 1, '$deviceEnrollmentTransactionId', '$completed_on', \"$response0\" )
 			"; 
 			$rs = x_SQL($sql, $cntDB);
 
@@ -115,12 +116,12 @@
 				$errorMessage = $error_result[0]['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
 	
 				// t_api_check_result
-				$response = str_replace( "\"","'", $response );
+				$response0 = str_replace( "\"","'", $response );
 				$sql = "INSERT INTO 
 							t_api_check_result
 							( t_order_idx, is_success, errorCode, deviceEnrollmentTransactionId, errorMessage, response )
 						VALUES 
-							( $order_idx, 0, '$errorCode', '$deviceEnrollmentTransactionId', '$errorMessage', \"$response\" )
+							( $order_idx, 0, '$errorCode', '$deviceEnrollmentTransactionId', '$errorMessage', \"$response0\" )
 				"; 
 				$rs = x_SQL($sql, $cntDB);
 			}
@@ -131,11 +132,12 @@
 					$errorMessage = $result['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
 	
 					// t_api_check_result
+					$response0 = str_replace( "\"","'", $response );
 					$sql = "INSERT INTO 
 								t_api_check_result
 								( t_order_idx, is_success, errorCode, transactionId, errorMessage, response )
 							VALUES 
-								( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response\" )
+								( $order_idx, 0, '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
 					"; 
 					$rs = x_SQL($sql, $cntDB);
 				}
