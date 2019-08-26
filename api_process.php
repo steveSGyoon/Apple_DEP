@@ -5,26 +5,6 @@
 
 	$cntDB0 = DBCONNECT_start();
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	$certFile = "/etc/ssl/certs/GRX-0001192168.ACC1914.Test.AppleCare.chain.pem";
-	$keyFile = "/home/sknb2b/dep_test_key/privatekey.key";
-	$actualUrl = "https://api-applecareconnect-ept.apple.com/enroll-service/1.0/check-transaction-status";
-	$requestXml = "";
-	$caFile = "/etc/ssl/certs/ca-certificates.crt";
-
-	$ch = curl_init($actualUrl);
-	curl_setopt($ch, CURLOPT_URL, $actualUrl);
-	curl_setopt($ch, CURLOPT_SSLKEY, $keyFile);
-	curl_setopt($ch, CURLOPT_CAINFO, $caFile);
-	curl_setopt($ch, CURLOPT_SSLCERT, $certFile);
-	$ret = curl_exec($ch);
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	
 	$ret = [];
 	$ret['result'] = "success";
 	$ret['result_msg'] = "result message = \n";
