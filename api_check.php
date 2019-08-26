@@ -18,6 +18,7 @@
 				LEFT JOIN t_api_enroll_result AS enroll_result ON enroll_result.t_order_idx = deporder.idx
 			WHERE 1 
 				AND enroll_result.is_success = 1
+				AND enroll_result.is_valid = 1
 				AND deporder.status = 1
 				AND deporder.is_valid = 1
 	";
