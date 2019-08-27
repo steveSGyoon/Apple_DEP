@@ -117,6 +117,8 @@
 		}]
 	}
 */
+	$sql = "SELECT * FROM t_order WHERE 1 AND idx = $order_idx";
+	$rowOrder = x_FETCH($sql, $cntDB0);
 ?>
 </head>
 
@@ -168,7 +170,7 @@
 								<tr>
 									<td class="info">Deliveries</td>
 									<td>
-										<a href="order_detail_delivery.php?apple_apply=yes&idx=<?=$t_detail_idx?>">
+										<a href="order_detail_delivery_apple.php?idx=<?=$t_detail_idx?>">
 										<button type="button" class="btn btn-sm btn-default">View</button>
 										</a>
 									</td>
