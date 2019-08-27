@@ -17,7 +17,13 @@
 	$response = doHttpPost($order_detail_url, $paramMap);
 	$result = json_decode($response, true);
 
+	echo $response;
+	echo "<BR><BR>";
+
 	$statusCode = $result['statusCode'];
+	echo $statusCode;
+	echo "<BR><BR>";
+
 	if ($statusCode == "COMPLETE") {
 		$respondedOn = $result['respondedOn'];
 		$response0 = str_replace( "\"","'", $response );
