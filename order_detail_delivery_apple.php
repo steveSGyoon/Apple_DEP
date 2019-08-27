@@ -19,10 +19,12 @@
 	$result = json_decode($row[response], true);
 
 echo $sql . "<BR><BR>";
-echo $row[response];
+echo $row[response] . "<BR><BR>";
 
 	$orders = $result['orders'];
 	$deliveries = $orders[0]['deliveries'];
+
+	echo "deliveries=" . count($deliveries) . "<BR><BR>";
 	// $deliveryNumber = $deliveries['deliveryNumber'];
 	// $shipDate = $deliveries['shipDate'];
 	// $devices = $deliveries['devices'];
