@@ -257,8 +257,8 @@ function make_order_json_string($order_idx, $void_ok, $cntDB) {
 	$devices = [];
 	$deliveries = [];
 	
-	$sql = "SELECT * FROM t_order WHERE 1 AND idx = $order_idx";
-	$rowOrder = x_FETCH($sql, $cntDB);
+	//$sql = "SELECT * FROM t_order WHERE 1 AND idx = $order_idx";
+	//$rowOrder = x_FETCH($sql, $cntDB);
 	
 	$post_data['requestContext']['shipTo'] = $rowOrder[ship_to];
 	$post_data['requestContext']['timeZone'] = "-540";
@@ -298,6 +298,20 @@ function make_order_json_string($order_idx, $void_ok, $cntDB) {
 	return json_encode($post_data);
 }
 
+
+function make_order_json_string_for_detail($order_idx, $cntDB) {
+	$sql = "SELECT * FROM t_order WHERE 1 AND idx = $order_idx";
+	$rowOrder = x_FETCH($sql, $cntDB);
+
+	$post_data = [];
+	$post_data['requestContext']['shipTo'] = $rowOrder[ship_to];
+	$post_data['requestContext']['timeZone'] = "-540";
+	$post_data['requestContext']['langCode'] = "ko";
+	$post_data['depResellerId'] = $rowOrder[dep_reseller_id];
+	$post_data['orderNumbers'][0] = $rowOrder[order_number];
+	
+	return json_encode($post_data);
+}
 
 ?>
 

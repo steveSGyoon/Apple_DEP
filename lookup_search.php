@@ -10,6 +10,7 @@
 
 	$cntDB = DBCONNECT_start();
 
+	$apple_apply = clearXSS(XSSfilter($_POST["apple_apply"]));
 	$search_type = clearXSS(XSSfilter($_POST["search_type"]));
 	$search_val = clearXSS(XSSfilter($_POST["search_val"]));
 
@@ -88,7 +89,12 @@
 						";
 						$rs = x_SQL($sql, $cntDB);
 						while ( $row = x_FETCH2($rs) ) {
+							$view_url = "lookup_detail.php?idx=" . $row[idx];
+							if ($apple_apply == "yes") {
+								$view_url = "lookup_detail_apple.php?idx=" . $row[idx];
+							}
 							?>
+							
 							<tr bgcolor='#ffffff'>
 								<td><?=$row[dep_customer_id]?></td>
 								<td><?=$row[skn_customer_id]?></td>
@@ -96,11 +102,12 @@
 								<td><?=$row[order_date]?></td>
 								<td><?=$row[order_type]?></td>
 								<td>
-									<a href="lookup_detail.php?idx=<?=$row[idx]?>" onclick="popupOpen(event, this.href, 'orderView', 500, 450)">
+									<a href="<?=$view_url?>" onclick="popupOpen(event, this.href, 'orderView', 500, 450)">
 									<button type="button" class="btn btn-sm btn-default">View</button>
 									</a>
 								</td>
 							</tr>
+
 							<?php
 							$enroll_idx++;
 						}

@@ -66,6 +66,14 @@
 							<button type='submit' class="btn btn-warning btn-sm size-15">Search</button>
 						</form>
 					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+						<form name='searchForm1' id='searchForm1' action="lookup_search.php" method="post" enctype="multipart/form-data">
+							<input type='hidden' name='apple_apply' id='apple_apply' value="yes">
+							<input type='hidden' name='search_type' id='search_type' value="order_number">
+							<input type='text' size=30 required name='search_val' id='search_val' placeholder="Order Number" style="height:35px;">
+							<button type='submit' class="btn btn-warning btn-sm size-15">Search</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div><br /><br />
