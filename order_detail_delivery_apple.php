@@ -21,18 +21,7 @@
 	$orderDate = $orders[0]['orderDate'];
 	$orderType = $orders[0]['orderType'];
 	$customerId = $orders[0]['customerId'];
-
-	echo "orderNumber=" . $orderNumber . "<BR>";
-	echo "orderDate=" . $orderDate . "<BR>";
-	echo "orderType=" . $orderType . "<BR>";
-	echo "customerId=" . $customerId . "<BR>";
-
 	$deliveries = $orders[0]['deliveries'];
-
-	echo "deliveries=" . count($deliveries) . "<BR><BR>";
-	// $deliveryNumber = $deliveries['deliveryNumber'];
-	// $shipDate = $deliveries['shipDate'];
-	// $devices = $deliveries['devices'];
 /*	success
 	{
 		"orders":
