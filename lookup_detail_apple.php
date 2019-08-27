@@ -13,7 +13,7 @@
 	$errorCode = "";
 	$order_idx = clearXSS(XSSfilter($_GET["idx"]));
 
-	$paramMap = make_order_json_string_for_detail($order_idx, $cntDB);
+	$paramMap = make_order_json_string_for_detail($order_idx, $cntDB0);
 	$response = doHttpPost($order_detail_url, $paramMap);
 	$result = json_decode($response, true);
 
