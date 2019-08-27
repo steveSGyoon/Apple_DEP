@@ -28,15 +28,13 @@
 					( $order_idx, 1, '$paramMap', \"$response0\", '$respondedOn')
 		"; 
 		$rs = x_SQL($sql, $cntDB0);
-		$t_detail_idx = mysql_insert_id();
+		$t_detail_idx = mysql_insert_id($cntDB0);
 
 		$orders = $result['orders'];
-		echo count($orders);
-
-		// $orderNumber = $orders[0]['orderNumber'];
-		// $orderDate = $orders[0]['orderDate'];
-		// $orderType = $orders[0]['orderType'];
-		// $customerId = $orders[0]['customerId'];
+		$orderNumber = $orders[0]['orderNumber'];
+		$orderDate = $orders[0]['orderDate'];
+		$orderType = $orders[0]['orderType'];
+		$customerId = $orders[0]['customerId'];
 	}
 	else {
 		$errorCode = $result['errorCode'];
