@@ -28,7 +28,7 @@
 					( $order_idx, 1, '$paramMap', \"$response0\", '$respondedOn')
 		"; 
 		$rs = x_SQL($sql, $cntDB0);
-		$t_detail_idx = mysql_insert_id($cntDB0);
+		$t_detail_idx = mysqli_insert_id($cntDB0);
 
 		$orders = $result['orders'];
 		$orderNumber = $orders[0]['orderNumber'];
