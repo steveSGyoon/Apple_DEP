@@ -18,6 +18,9 @@
 	$row = x_FETCH($sql, $cntDB);
 	$result = json_decode($row[response], true);
 
+echo $sql . "<BR><BR>";
+echo $row[response];
+
 	$orders = $result['orders'];
 	$deliveries = $orders[0]['deliveries'];
 	// $deliveryNumber = $deliveries['deliveryNumber'];
