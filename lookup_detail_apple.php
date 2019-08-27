@@ -17,13 +17,7 @@
 	$response = doHttpPost($order_detail_url, $paramMap);
 	$result = json_decode($response, true);
 
-	echo $response;
-	echo "<BR><BR>";
-
 	$statusCode = $result['statusCode'];
-	echo $statusCode;
-	echo "<BR><BR>";
-
 	if ($statusCode == "COMPLETE") {
 		$respondedOn = $result['respondedOn'];
 		$response0 = str_replace( "\"","'", $response );
@@ -34,13 +28,13 @@
 					( $order_idx, 1, '$paramMap', \"$response0\", '$respondedOn')
 		"; 
 		$rs = x_SQL($sql, $cntDB0);
-		echo $sql;
-		echo "<BR><BR>";
-	
-		$orderNumber = $result['orderNumber'];
-		$orderDate = $result['orderDate'];
-		$orderType = $result['orderType'];
-		$customerId = $result['customerId'];
+		$t_detail_idx = mysql_insert_id();
+
+		$orders = $result['orders'];
+		$orderNumber = $orders[0]['orderNumber'];
+		$orderDate = $orders[0]['orderDate'];
+		$orderType = $orders[0]['orderType'];
+		$customerId = $orders[0]['customerId'];
 	}
 	else {
 		$errorCode = $result['errorCode'];
@@ -174,7 +168,7 @@
 								<tr>
 									<td class="info">Deliveries</td>
 									<td>
-										<a href="order_detail_delivery.php?idx=<?=$rowOrder[idx]?>">
+										<a href="order_detail_delivery.php?apple_apply=yes&idx=<?=$t_detail_idx?>">
 										<button type="button" class="btn btn-sm btn-default">View</button>
 										</a>
 									</td>
