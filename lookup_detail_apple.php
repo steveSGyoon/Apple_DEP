@@ -31,10 +31,12 @@
 		$t_detail_idx = mysql_insert_id();
 
 		$orders = $result['orders'];
-		$orderNumber = $orders[0]['orderNumber'];
-		$orderDate = $orders[0]['orderDate'];
-		$orderType = $orders[0]['orderType'];
-		$customerId = $orders[0]['customerId'];
+		echo count($orders);
+
+		// $orderNumber = $orders[0]['orderNumber'];
+		// $orderDate = $orders[0]['orderDate'];
+		// $orderType = $orders[0]['orderType'];
+		// $customerId = $orders[0]['customerId'];
 	}
 	else {
 		$errorCode = $result['errorCode'];
