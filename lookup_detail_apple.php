@@ -28,7 +28,6 @@
 					( $order_idx, 1, '$paramMap', \"$response0\", '$respondedOn')
 		"; 
 		$rs = x_SQL($sql, $cntDB0);
-		$t_detail_idx = mysqli_insert_id($cntDB0);
 
 		$orders = $result['orders'];
 		$orderNumber = $orders[0]['orderNumber'];
@@ -170,7 +169,7 @@
 								<tr>
 									<td class="info">Deliveries</td>
 									<td>
-										<a href="order_detail_delivery_apple.php?idx=<?=$t_detail_idx?>">
+										<a href="order_detail_delivery_apple.php?order_idx=<?=$order_idx?>">
 										<button type="button" class="btn btn-sm btn-default">View</button>
 										</a>
 									</td>

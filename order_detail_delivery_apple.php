@@ -10,16 +10,11 @@
 
 	$cntDB = DBCONNECT_start();
 
-	$idx = clearXSS(XSSfilter($_GET["idx"]));
+	$order_idx = clearXSS(XSSfilter($_GET["order_idx"]));
 
-	$delivery_number = [];
-
-	$sql = "SELECT response FROM t_api_detail_result WHERE idx = $idx";
-	$row = x_FETCH($sql, $cntDB);
-	$result = json_decode($row[response], true);
-
-echo $sql . "<BR><BR>";
-echo $row[response] . "<BR><BR>";
+	$paramMap = make_order_json_string_for_detail($order_idx, $cntDB);
+	$response = doHttpPost($order_detail_url, $paramMap);
+	$result = json_decode($response, true);
 
 	$orders = $result['orders'];
 	$orderNumber = $orders[0]['orderNumber'];
