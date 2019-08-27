@@ -13,10 +13,10 @@
 	$order_idx = clearXSS(XSSfilter($_GET["idx"]));
 
 	$paramMap = make_order_json_string_for_detail($order_idx, $cntDB);
+	$response = doHttpPost($order_detail_url, $paramMap);
+	$result = json_decode($response, true);
 
-	echo $paramMap;
-	//$response = doHttpPost($order_detail_url, $paramMap);
-	//$result = json_decode($response, true);
+	echo $response;
 ?>
 </head>
 
