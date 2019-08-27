@@ -8,7 +8,7 @@
 	include "header/functionsY.php";
 	include "header/_checkLogin.php";
 
-	$cntDB = DBCONNECT_start();
+	$cntDB0 = DBCONNECT_start();
 
 	$errorCode = "";
 	$order_idx = clearXSS(XSSfilter($_GET["idx"]));
@@ -34,7 +34,9 @@
 					( $order_idx, 1, '$paramMap', \"$response0\", '$respondedOn')
 		"; 
 		$rs = x_SQL($sql, $cntDB0);
-
+		echo $sql;
+		echo "<BR><BR>";
+	
 		$orderNumber = $result['orderNumber'];
 		$orderDate = $result['orderDate'];
 		$orderType = $result['orderType'];
@@ -212,7 +214,7 @@
 
 	<?php
 	include "subHeader/footerJS.php";
-	DBCLOSE_end($cntDB);
+	DBCLOSE_end($cntDB0);
 	?>
 
 	<script type="text/javascript">
