@@ -133,6 +133,12 @@
 									if ($rowCheck2[order_cnt] == 0) {
 										$error_msg = "<font color='red'>[$iy] Error !! - $order_type[$iy] : no existing order number. </font><br />";
 									}
+									else {
+										if ( $order_type[$iy] == "RE" ) {
+											//주문번호를 원래주문번호-RE로 수정한다
+											$order_number[$iy] = $order_number[$iy] . "-RE";
+										}
+									}
 								}
 							}
 
