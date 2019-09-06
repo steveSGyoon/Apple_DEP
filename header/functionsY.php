@@ -272,26 +272,29 @@ function make_order_json_string($order_idx, $void_ok, $cntDB) {
 	$orders[0]['orderType'] = $order_type;
 	$orders[0]['customerId'] = $rowOrder[dep_customer_id];
 	$orders[0]['poNumber'] = $rowOrder[po_number];
+
 	
-	$id = 0;
-	$sql = "SELECT DISTINCT(delivery_number) FROM t_order_device WHERE t_order_idx = $order_idx";
-	$rs = x_SQL($sql, $cntDB);
-	while ( $row = x_FETCH2($rs) ) {
-		$device_ix = 0;
-		$sql = "SELECT * FROM t_order_device WHERE 1 AND t_order_idx = $order_idx AND delivery_number = '$row[delivery_number]'";
-		$rsDevice = x_SQL($sql, $cntDB);
-		while ( $rowDevice = x_FETCH2($rsDevice) ) {
-			$devices[$device_ix]['deviceId'] = $rowDevice[device_id];
-			$devices[$device_ix]['assetTag'] = $rowDevice[asset_tag];
-	
-			$deliveries[$id]['deliveryNumber'] = $rowDevice[delivery_number];
-			$deliveries[$id]['shipDate'] = $ship_date;
-			$deliveries[$id]['devices'] = $devices;
-	
-			$device_ix++;
+	if ($void_ok != 1) {
+		$id = 0;
+		$sql = "SELECT DISTINCT(delivery_number) FROM t_order_device WHERE t_order_idx = $order_idx";
+		$rs = x_SQL($sql, $cntDB);
+		while ( $row = x_FETCH2($rs) ) {
+			$device_ix = 0;
+			$sql = "SELECT * FROM t_order_device WHERE 1 AND t_order_idx = $order_idx AND delivery_number = '$row[delivery_number]'";
+			$rsDevice = x_SQL($sql, $cntDB);
+			while ( $rowDevice = x_FETCH2($rsDevice) ) {
+				$devices[$device_ix]['deviceId'] = $rowDevice[device_id];
+				$devices[$device_ix]['assetTag'] = $rowDevice[asset_tag];
+		
+				$deliveries[$id]['deliveryNumber'] = $rowDevice[delivery_number];
+				$deliveries[$id]['shipDate'] = $ship_date;
+				$deliveries[$id]['devices'] = $devices;
+		
+				$device_ix++;
+			}
+			$orders[0]['deliveries'] = $deliveries;
+			$id++;
 		}
-		$orders[0]['deliveries'] = $deliveries;
-		$id++;
 	}
 	$post_data['orders'] = $orders;
 	
