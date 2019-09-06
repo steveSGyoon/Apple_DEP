@@ -19,7 +19,7 @@
 				AND t_order_idx = $idx
 	";
 	$rowError = x_FETCH($sql, $cntDB);
-	$result = json_decode($rowError['response'], true);
+	$result = json_decode($rowError['response']);
 
 	$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionID'];
 	$transactionId = $result['transactionId'];
