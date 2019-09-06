@@ -112,7 +112,7 @@
 						}
 						else {
 							//check point 2 = order type : OR / RE / OV
-							if ( $order_type[$iy]!="OR" && $order_type[$iy]!="RE" && $order_type[$iy]!="OV" ) {
+							if ( $order_type[$iy]!="OR" && $order_type[$iy]!="RE" && $order_type[$iy]!="OV" && $order_type[$iy]!="VD" ) {
 								$error_msg = "<font color='red'>[$iy] Error !! - $order_type[$iy] : unknown order_type. </font><br />";
 							}
 							else {
