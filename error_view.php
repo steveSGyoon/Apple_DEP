@@ -84,7 +84,7 @@
 											<td>
 									";
 
-									$deliveries = $orders[$i]['deliveries']
+									$deliveries = $orders[$i]['deliveries'];
 									for ($j=0; $j<count($deliveries); $j++) {
 										echo "
 										$deliveries[$j]['deliveryPostStatus'] <br />

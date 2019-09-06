@@ -75,8 +75,8 @@
 								//echo $sql . "<br>";
 								$rowError = x_FETCH($sql, $cntDB);
 								if ($rowError[0] != 0) {
-									$error_view = "<a href='error_detail.php?idx=<?=$row[idx]?>' onclick='popupOpen(event, this.href, \"errorView\", 500, 450)'>";
-									$error_view .= "<button type='button' class='btn btn-xs btn-default'>error</button>";
+									$error_view = "<a href='error_view.php?idx=$row[idx]' onclick='popupOpen(event, this.href, \"errorView\", 500, 450)'>";
+									$error_view .= "<button type='button' class='btn btn-xs btn-danger'>error</button>";
 									$error_view .= "</a>";
 								}
 
