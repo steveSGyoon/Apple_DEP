@@ -71,19 +71,20 @@
 						<table class="table table-bordered table-striped text-center">
 							<?php
 								for ($i=0; $i<count($orders); $i++) {
-									$ordernumber = $orders[$i]['orderNumber'];
+									$orderNumber = $orders[$i]['orderNumber'];
 									$orderPostStatus = $orders[$i]['orderPostStatus'];
+
 									echo "
 										<tr>
 											<td class=info>Order Number</td>
 											<td> $orderNumber </td>
 										</tr>
 										<tr>
-											<td class=info>Order Number</td>
+											<td class=info>Order Poststatus</td>
 											<td> $orderPostStatus </td>
 										</tr>
 										<tr>
-											<td class=info>Deviveries</td>
+											<td class=info>Deliveries</td>
 											<td>
 									";
 
