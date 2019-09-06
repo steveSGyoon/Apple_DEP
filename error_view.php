@@ -19,7 +19,8 @@
 				AND t_order_idx = $idx
 	";
 	$rowError = x_FETCH($sql, $cntDB);
-	$result = json_decode($rowError['response']);
+	$response0 = str_replace( "'","\"", $rowError['response'] );
+	$result = json_decode($response0, true);
 
 	$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionID'];
 	$transactionId = $result['transactionId'];
@@ -29,7 +30,6 @@
 	echo "r=" . $result['deviceEnrollmentTransactionID'] . "<br>";
 	echo "r=" . $result['transactionId'] . "<br>";
 	echo "r=" . $result['completedOn'] . "<br>";
-	echo $rowError['response'];
 /*
 	{
 		'deviceEnrollmentTransactionID':'3fafc351-d646-4194-be25-90456378bc7e_1567646658758',
