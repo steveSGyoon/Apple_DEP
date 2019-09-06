@@ -71,8 +71,8 @@
 								$enroll_name = "enroll_" . $enroll_idx;
 
 								$error_view = "";
-								$sql = "SELECT count(*) FROM t_api_check_result WHERE t_order_idx = $row[idx] AND errCode != '' AND errCode != null";
-								echo $sql . "<br>";
+								$sql = "SELECT count(*) FROM t_api_check_result WHERE t_order_idx = $row[idx] AND errorCode != '' AND errorCode is not null";
+								//echo $sql . "<br>";
 								$rowError = x_FETCH($sql, $cntDB);
 								if ($rowError[0] != 0) {
 									$error_view = "<a href='error_detail.php?idx=<?=$row[idx]?>' onclick='popupOpen(event, this.href, \"errorView\", 500, 450)'>";
