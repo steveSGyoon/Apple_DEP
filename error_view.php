@@ -26,6 +26,7 @@
 	$completedOn = $result['completedOn'];
 	$orders = $result['orders'];
 
+	echo $rowError['response'];
 /*
 	{
 		'deviceEnrollmentTransactionID':'3fafc351-d646-4194-be25-90456378bc7e_1567646658758',
