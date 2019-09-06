@@ -29,7 +29,7 @@
 	echo "r=" . $result['deviceEnrollmentTransactionID'] . "<br>";
 	echo "r=" . $result['transactionId'] . "<br>";
 	echo "r=" . $result['completedOn'] . "<br>";
-	//echo $rowError['response'];
+	echo $rowError['response'];
 /*
 	{
 		'deviceEnrollmentTransactionID':'3fafc351-d646-4194-be25-90456378bc7e_1567646658758',
