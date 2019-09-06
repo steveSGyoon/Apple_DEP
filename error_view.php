@@ -17,6 +17,12 @@
 				t_api_check_result
 			WHERE 1
 				AND t_order_idx = $idx
+				AND errorCode != '' 
+				AND errorCode is not null
+			ORDER BY
+				insert_date DESC
+			LIMIT
+				0, 1
 	";
 	$rowError = x_FETCH($sql, $cntDB);
 	$response0 = str_replace( "'","\"", $rowError['response'] );
