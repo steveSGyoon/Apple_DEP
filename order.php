@@ -69,6 +69,16 @@
 							$rs = x_SQL($sql, $cntDB);
 							while ( $row = x_FETCH2($rs) ) {
 								$enroll_name = "enroll_" . $enroll_idx;
+
+								$error_view = "";
+								$sql = "SELECT count(*) FROM t_api_check_result WHERE t_order_idx = $row[idx] AND errCode != "" AND errCode != null";
+								$rowError = x_FETCH($sql, $cntDB);
+								if ($rowError[0] != 0) {
+									$error_view = "<a href='error_detail.php?idx=<?=$row[idx]?>' onclick='popupOpen(event, this.href, \"errorView\", 500, 450)'>";
+									$error_view .= "<button type='button' class='btn btn-xs btn-default'>error</button>";
+									$error_view .= "</a>";
+								}
+
 								?>
 								<tr bgcolor='#ffffff'>
 									<td>
@@ -82,6 +92,7 @@
 										<a href="order_detail.php?idx=<?=$row[idx]?>" onclick="popupOpen(event, this.href, 'orderView', 500, 450)">
 										<button type="button" class="btn btn-sm btn-default">View</button>
 										</a>
+										<?=$error_view?>
 									</td>
 								</tr>
 								<?php
