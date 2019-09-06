@@ -27,9 +27,6 @@
 	$completedOn = $result['completedOn'];
 	$orders = $result['orders'];
 
-	echo "r=" . $result['deviceEnrollmentTransactionID'] . "<br>";
-	echo "r=" . $result['transactionId'] . "<br>";
-	echo "r=" . $result['completedOn'] . "<br>";
 /*
 	{
 		'deviceEnrollmentTransactionID':'3fafc351-d646-4194-be25-90456378bc7e_1567646658758',
@@ -74,14 +71,16 @@
 						<table class="table table-bordered table-striped text-center">
 							<?php
 								for ($i=0; $i<count($orders); $i++) {
+									$ordernumber = $orders[$i]['orderNumber'];
+									$orderPostStatus = $orders[$i]['orderPostStatus'];
 									echo "
 										<tr>
 											<td class=info>Order Number</td>
-											<td> $orders[$i]['orderNumber'] </td>
+											<td> $orderNumber </td>
 										</tr>
 										<tr>
 											<td class=info>Order Number</td>
-											<td> $orders[$i]['orderPostStatus'] </td>
+											<td> $orderPostStatus </td>
 										</tr>
 										<tr>
 											<td class=info>Deviveries</td>
@@ -90,9 +89,12 @@
 
 									$deliveries = $orders[$i]['deliveries'];
 									for ($j=0; $j<count($deliveries); $j++) {
+										$deliveryPostStatus = $deliveries[$j]['deliveryPostStatus'];
+										$deliveryPostStatusMessage = $deliveries[$j]['deliveryPostStatusMessage'];
+
 										echo "
-										$deliveries[$j]['deliveryPostStatus'] <br />
-										$deliveries[$j]['deliveryPostStatusMessage'] <br />
+										$deliveryPostStatus <br />
+										$deliveryPostStatusMessage <br />
 										";
 									}
 
