@@ -55,6 +55,45 @@
 			],
 		'statusCode':'ERROR'
 	}
+
+	{
+		'deviceEnrollmentTransactionID':'a1ba4ac5-0b08-4d70-a352-a976fba4c63f_1567643442930',
+		'transactionId':'20190905-1567643416-4487',
+		'completedOn':'2019-09-05T00:31:21Z',
+		'orders':
+			[
+				{
+					'orderNumber':'ORDER-T5',
+					'orderPostStatus':'POSTED_WITH_ERRORS',
+					'deliveries':
+						[
+							{
+								'deliveryNumber':'SELF',
+								'deliveryPostStatus':'POSTED_WITH_ERRORS',
+								'devices':
+									[
+										{
+											'deviceId':'C01W103SHG7F',
+											'devicePostStatus':'COMPLETE'
+										},
+										{
+											'deviceId':'C01W103THG7F',
+											'devicePostStatus':'COMPLETE'
+										},
+										{
+											'deviceId':'C01W104AHG',
+											'devicePostStatus': 'DEP-ERR-DE-4301',
+											'devicePostStatusMessage':'기기 ID가 유효하지 않습니다. 유효한 기기 ID를 입력하고 요청을 다시 제출하십시오.'
+										}
+									]
+							}
+						]
+				}
+			],
+		'statusCode':'COMPLETE_WITH_ERRORS'
+	}
+
+
 */
 
 
@@ -98,11 +137,41 @@
 									for ($j=0; $j<count($deliveries); $j++) {
 										$deliveryPostStatus = $deliveries[$j]['deliveryPostStatus'];
 										$deliveryPostStatusMessage = $deliveries[$j]['deliveryPostStatusMessage'];
+										$devices = $deliveries[$j]['devices'];
 
 										echo "
 										$deliveryPostStatus <br />
-										$deliveryPostStatusMessage <br />
+										$deliveryPostStatusMessage
 										";
+/*
+										{
+											'deviceId':'C01W103SHG7F',
+											'devicePostStatus':'COMPLETE'
+										},
+										{
+											'deviceId':'C01W103THG7F',
+											'devicePostStatus':'COMPLETE'
+										},
+										{
+											'deviceId':'C01W104AHG',
+											'devicePostStatus': 'DEP-ERR-DE-4301',
+											'devicePostStatusMessage':'기기 ID가 유효하지 않습니다. 유효한 기기 ID를 입력하고 요청을 다시 제출하십시오.'
+										}
+*/
+										if (count($devices) > 0) {
+											echo "<br /><br />";
+											for ($k=0; $k<count($devices); $k++) {
+												$deviceId = $devices[$k]['deviceId'];
+												$devicePostStatus = $devices[$k]['devicePostStatus'];
+												$devicePostStatusMessage = $devices[$k]['devicePostStatusMessage'];
+
+												echo $deviceId . " : " . $devicePostStatus;
+												if ( strlen($devicePostStatusMessage) > 0)
+													echo "<br />(" . $devicePostStatusMessage . ")";
+
+												echo "<br /><br />";
+											}
+										}
 									}
 
 									echo "
