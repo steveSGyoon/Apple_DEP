@@ -14,74 +14,76 @@
 		$enroll_name = "enroll_" . $i;
 		$order_idx = $_POST[$enroll_name];
 
-		// OV or VO case - make is_valid=0 for existing order 
-		$old_order_idx = $_POST["old_order_idx"];
-		$void_ok = $_POST["void_ok"];
-		if ($old_order_idx) {
-			$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $old_order_idx"; 
-			$rs = x_SQL($sql, $cntDB0);
+		if ($order_idx) {
+			// OV or VO case - make is_valid=0 for existing order 
+			$old_order_idx = $_POST["old_order_idx"];
+			$void_ok = $_POST["void_ok"];
+			if ($old_order_idx) {
+				$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $old_order_idx"; 
+				$rs = x_SQL($sql, $cntDB0);
 
-			$sql = "UPDATE t_order_device SET is_valid=0 WHERE t_order_idx = $old_order_idx"; 
-			$rs = x_SQL($sql, $cntDB0);
-		}
-		else if ($void_ok) {
-			//$sql = "UPDATE t_order SET status=1, is_void=1, is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
-			$sql = "UPDATE t_order SET status=1, is_void=1, edit_date=now() WHERE idx = $order_idx"; 
-			$rs = x_SQL($sql, $cntDB0);
-		}
+				$sql = "UPDATE t_order_device SET is_valid=0 WHERE t_order_idx = $old_order_idx"; 
+				$rs = x_SQL($sql, $cntDB0);
+			}
+			else if ($void_ok) {
+				//$sql = "UPDATE t_order SET status=1, is_void=1, is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
+				$sql = "UPDATE t_order SET status=1, is_void=1, edit_date=now() WHERE idx = $order_idx"; 
+				$rs = x_SQL($sql, $cntDB0);
+			}
 
-		if (!$void_ok)
-			$void_ok = 0;
-		// OV or VO case - make is_valid=0 for existing order 
+			if (!$void_ok)
+				$void_ok = 0;
+			// OV or VO case - make is_valid=0 for existing order 
 
-		$paramMap = make_order_json_string($order_idx, $void_ok, $cntDB0);
-		$response = doHttpPost($enroll_url, $paramMap);
-		$result = json_decode($response, true);
+			$paramMap = make_order_json_string($order_idx, $void_ok, $cntDB0);
+			$response = doHttpPost($enroll_url, $paramMap);
+			$result = json_decode($response, true);
 
-		$status = $result['enrollDevicesResponse']['statusCode'];
-		if ($status == "SUCCESS") {
-			$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionId'];
+			$status = $result['enrollDevicesResponse']['statusCode'];
+			if ($status == "SUCCESS") {
+				$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionId'];
 
-			// t_api_enroll_result
-			$response0 = str_replace( "\"","'", $response );
-			$sql = "INSERT INTO 
-						t_api_enroll_result
-						( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, transactionId, response)
-					VALUES 
-						( $order_idx, 1, '$paramMap', '$deviceEnrollmentTransactionId', '$transactionId', \"$response0\")
-			"; 
-			$rs = x_SQL($sql, $cntDB0);
+				// t_api_enroll_result
+				$response0 = str_replace( "\"","'", $response );
+				$sql = "INSERT INTO 
+							t_api_enroll_result
+							( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, transactionId, response)
+						VALUES 
+							( $order_idx, 1, '$paramMap', '$deviceEnrollmentTransactionId', '$transactionId', \"$response0\")
+				"; 
+				$rs = x_SQL($sql, $cntDB0);
 
-			// t_order - status change to 1
-			$sql = "UPDATE t_order SET status=1, applied_date=now() WHERE idx = $order_idx"; 
-			$rs = x_SQL($sql, $cntDB0);
+				// t_order - status change to 1
+				$sql = "UPDATE t_order SET status=1, applied_date=now() WHERE idx = $order_idx"; 
+				$rs = x_SQL($sql, $cntDB0);
 
-			$ret['result_msg'] .= $order_idx . ":success\n";
-		}
-		else {
-			$errorMessage = "";
-			$errorCode = $result['errorCode'];
-			$transactionId = $result['transactionId'];
-			$errorMessage = $result['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
-			if ($errorMessage == "")
-				$errorMessage = "multiple error - " . count($result);
+				$ret['result_msg'] .= $order_idx . ":success\n";
+			}
+			else {
+				$errorMessage = "";
+				$errorCode = $result['errorCode'];
+				$transactionId = $result['transactionId'];
+				$errorMessage = $result['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
+				if ($errorMessage == "")
+					$errorMessage = "multiple error - " . count($result);
 
-			// t_api_enroll_result
-			$response0 = str_replace( "\"","'", $response );
-			$sql = "INSERT INTO 
-						t_api_enroll_result
-						( t_order_idx, is_success, send_data, errorCode, transactionId, errorMessage, response )
-					VALUES 
-						( $order_idx, 0, '$paramMap', '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
-			"; 
-			$rs = x_SQL($sql, $cntDB0);
+				// t_api_enroll_result
+				$response0 = str_replace( "\"","'", $response );
+				$sql = "INSERT INTO 
+							t_api_enroll_result
+							( t_order_idx, is_success, send_data, errorCode, transactionId, errorMessage, response )
+						VALUES 
+							( $order_idx, 0, '$paramMap', '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
+				"; 
+				$rs = x_SQL($sql, $cntDB0);
 
-			// t_order - make this order invalid
-			//$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
-			//$rs = x_SQL($sql, $cntDB0);
+				// t_order - make this order invalid
+				//$sql = "UPDATE t_order SET is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
+				//$rs = x_SQL($sql, $cntDB0);
 
-			$ret['result'] = "fail";
-			$ret['error_msg'] .= $order_idx . ":" . $response . ":param error\n";
+				$ret['result'] = "fail";
+				$ret['error_msg'] .= $order_idx . ":" . $response . ":param error\n";
+			}
 		}
 	}
 
