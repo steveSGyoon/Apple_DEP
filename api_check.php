@@ -39,6 +39,12 @@
 
 //echo $response;
 /*
+
+
+
+
+
+
 { 
 { 
 	"deviceEnrollmentTransactionID" : "fbf74c2f-dd4b-4bfe-b0db-b1e8f99c4031_1565084411614", 
@@ -90,18 +96,48 @@
 	"completedOn":"2019-08-06T10:10:28Z"
 }
 
+
+{
+	'deviceEnrollmentTransactionID':'a1ba4ac5-0b08-4d70-a352-a976fba4c63f_1567643442930',
+	'transactionId':'20190905-1567643416-4487',
+	'completedOn':'2019-09-05T00:31:21Z',
+	'orders':[{
+		'orderNumber':'ORDER-T5',
+		'orderPostStatus':'POSTED_WITH_ERRORS',
+		'deliveries':[{
+			'deliveryNumber':'SELF',
+			'deliveryPostStatus':'POSTED_WITH_ERRORS',
+			'devices':[
+				{'deviceId':'C01W103SHG7F',
+				'devicePostStatus':'COMPLETE'},
+				{'deviceId':'C01W103THG7F',
+				'devicePostStatus':'COMPLETE'},
+				{'deviceId':'C01W104AHG',
+				'devicePostStatus':'DEP-ERR-DE-4301',
+				'devicePostStatusMessage':'기기 ID가 유효하지 않습니다. 유효한 기기 ID를 입력하고 요청을 다시 제출하십시오.'}
+				]
+			}
+			]
+		}
+		],
+	'statusCode':'COMPLETE_WITH_ERRORS'
+}
+
 */
+
 		$status = $result['statusCode'];
 		$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionID'];
 		$completed_on = $result['completedOn'];
-		if ($status == "COMPLETE") {
+		if ($status == "COMPLETE" || $status == "COMPLETE_WITH_ERRORS") {
+			$transactionId = $result['transactionId'];
+
 			// t_api_check_result
 			$response0 = str_replace( "\"","'", $response );
 			$sql = "INSERT INTO 
 						t_api_check_result
-						( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, completed_on, response )
+						( t_order_idx, is_success, send_data, deviceEnrollmentTransactionId, transactionId, completed_on, response )
 					VALUES 
-						( $order_idx, 1, '$paramMap', '$deviceEnrollmentTransactionId', '$completed_on', \"$response0\" )
+						( $order_idx, 1, '$paramMap', '$deviceEnrollmentTransactionId', '$transactionId', '$completed_on', \"$response0\" )
 			"; 
 			$rs = x_SQL($sql, $cntDB);
 
@@ -113,6 +149,36 @@
 			else {
 				$sql = "UPDATE t_order SET status=2, completed_date=now() WHERE idx = $order_idx"; 
 				$rs = x_SQL($sql, $cntDB);
+
+				$orders = $result['orders'];
+				for ($i=0; $i<count($orders); $i++) {
+					$orderNumber = $orders[$i]['orderNumber'];
+					$orderPostStatus = $orders[$i]['orderPostStatus'];
+					$deliveries = $orders[$i]['deliveries'];
+
+					for ($j=0; $j<count($deliveries); $j++) {
+						$deliveryPostStatus = $deliveries[$j]['deliveryPostStatus'];
+						$deliveryPostStatusMessage = $deliveries[$j]['deliveryPostStatusMessage'];
+						$devices = $deliveries[$j]['devices'];
+
+						if (count($devices) > 0) {
+							for ($k=0; $k<count($devices); $k++) {
+								$deviceId = $devices[$k]['deviceId'];
+								$devicePostStatus = $devices[$k]['devicePostStatus'];
+								$devicePostStatusMessage = "";
+								if ($devicePostStatus != "COMPLETE")
+									$devicePostStatusMessage = $devices[$k]['devicePostStatusMessage'];
+
+								$sql = "SELECT idx FROM t_order_device WHERE t_order_idx = $order_idx AND device_id='$deviceId' "; 
+								$rowDevice = x_FETCH($sql, $cntDB);
+								if ($rowDevice['idx']) {
+									$sql = "UPDATE t_order_device SET devicePostStatus='$devicePostStatus', devicePostStatusMessage='$devicePostStatusMessage' WHERE idx = $rowDevice['idx'] "; 
+									$rs = x_SQL($sql, $cntDB);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		else {
