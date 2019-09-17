@@ -172,7 +172,15 @@
 								$sql = "SELECT idx FROM t_order_device WHERE t_order_idx = $order_idx AND device_id='$deviceId' "; 
 								$rowDevice = x_FETCH($sql, $cntDB);
 								if ($rowDevice['idx']) {
-									$sql = "UPDATE t_order_device SET devicePostStatus='$devicePostStatus', devicePostStatusMessage='$devicePostStatusMessage' WHERE idx = $rowDevice['idx'] "; 
+									$t_order_device_idx = $rowDevice['idx'];
+									$sql = "UPDATE 
+												t_order_device 
+											SET 
+												devicePostStatus = '$devicePostStatus', 
+												devicePostStatusMessage = '$devicePostStatusMessage' 
+											WHERE 
+												idx = $t_order_device_idx
+											"; 
 									$rs = x_SQL($sql, $cntDB);
 								}
 							}
