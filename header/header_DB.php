@@ -12,6 +12,11 @@
 	$uat_check_url = "https://api-applecareconnect-ept.apple.com/enroll-service/1.0/check-transaction-status";
 	$uat_order_detail_url = "https://api-applecareconnect-ept.apple.com/enroll-service/1.0/show-order-details";
 
+	$real_enroll_url = "https://api-applecareconnect2.apple.com/enroll-service/1.0/bulk-enroll-devices";
+	$real_check_url = "https://api-applecareconnect2.apple.com/enroll-service/1.0/check-transaction-status";
+	$real_order_detail_url = "https://api-applecareconnect2.apple.com/enroll-service/1.0/show-order-details";
+	
+
 	$enroll_url = $uat_enroll_url;
 	$check_url = $uat_check_url;
 	$order_detail_url = $uat_order_detail_url;

@@ -198,21 +198,8 @@ function doHttpPost($url = null, $postData = null) {
 		return NULL;
 	}
 	
-	// curl -v —cert /etc/ssl/certs/GRX-0001192168.ACC1914.Test.AppleCare.chain.pem —key /home/sknb2b/dep_test_key/privatekey.key 
-	// https://api-applecareconnect-ept.apple.com/enroll-service/1.0/check-transaction-status -d "{
-	// 	"requestContext": {
-	// 		"shipTo": "0000052010",
-	// 		"timeZone": "420",
-	// 		"langCode": "en"
-	// 	},
-	// 	"depResellerId": "16FCE4A0",
-	// 	"deviceEnrollmentTransactionId": "9acc1cf5-e41d-44d4-a066-78162a389da2_1413529391461"
-	// }"
-
 	$certFile = "/etc/ssl/certs/GRX-0001192168.ACC1914.Test.AppleCare.chain.pem";
 	$keyFile = "/home/sknb2b/dep_test_key/privatekey.key";
-	// $actualUrl = "https://api-applecareconnect-ept.apple.com/enroll-service/1.0/check-transaction-status";
-	// $requestXml = "";
 	$caFile = "/etc/ssl/certs/ca-certificates.crt";
 
 	// $ch = curl_init($actualUrl);
