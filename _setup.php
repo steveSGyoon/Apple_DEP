@@ -11,7 +11,7 @@
 	$cntDB = DBCONNECT_start();
 
 	$wp_hasher = new PasswordHash(8, TRUE);
-	$ecrypt_password = $wp_hasher->HashPassword("dlshxkdlawkfskrk101102*");
+	$ecrypt_password = $wp_hasher->HashPassword("innotime1234$");
 
 	$sql = "insert into t_user (user_id, user_password, user_name, _ADMIN) values ('admin', '$ecrypt_password', '관리자', 1)";
 	$rsTemp = x_SQL($sql, $cntDB);
