@@ -52,6 +52,7 @@
 									<tr class="info">
 										<th class="text-center">Device ID</th>
 										<th class="text-center">Asset Tag</th>
+										<th class="text-center">Posst Status</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -67,10 +68,18 @@
 								";
 								$rs = x_SQL($sql, $cntDB);
 								while ( $row = x_FETCH2($rs) ) {
+									$postInfo = "";
+									if ($row[devicePostStatus])
+										$postInfo .= $row[devicePostStatus];
+									if ($row[devicePostStatus])
+										$postInfo .= "<br />" . $row[devicePostStatusMessage];
 									?>
 									<tr bgcolor='#ffffff'>
 										<td><?=$row[device_id]?></td>
 										<td><?=$row[asset_tag]?></td>
+										<td>
+											<?=$postInfo?>
+										</td>
 									</tr>
 									<?php
 								}
