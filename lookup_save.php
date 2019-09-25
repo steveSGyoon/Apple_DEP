@@ -53,22 +53,21 @@
 	";
 	$rsDevice = x_SQL($sql, $cntDB);
 	while ( $rowDevice = x_FETCH2($rsDevice) ) {
-		$bodyString .= "Delivery Number : ";
+		$bodyString .= "Delivery Number,";
 		$bodyString .= $rowDevice[delivery_number] . "\n";
-		$bodyString .= "Device ID : ";
+		$bodyString .= "Device ID,";
 		$bodyString .= $rowDevice[device_id] . "\n";
-		$bodyString .= "Asset Tag : ";
+		$bodyString .= "Asset Tag,";
 		$bodyString .= $rowDevice[asset_tag] . "\n";
 
 		if ($rowDevice[devicePostStatus]) {
-			$bodyString .= "Post Status : ";
+			$bodyString .= "Post Status,";
 			$bodyString .= $rowDevice[devicePostStatus] . "\n";
 		}
 		if ($rowDevice[devicePostStatusMessage]) {
-			$bodyString .= "Post Status Message : ";
+			$bodyString .= "Post Status Message,";
 			$bodyString .= $rowDevice[devicePostStatusMessage] . "\n";
 		}
-		$bodyString .= "\n";
 	}
 
 	
