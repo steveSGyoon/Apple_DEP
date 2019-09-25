@@ -29,6 +29,8 @@
 
 	$bodyString .= "Ship To,";
 	$bodyString .= $rowOrder[ship_to] . "\n";
+	$bodyString .= "Ship Date,";
+	$bodyString .= $rowOrder[ship_date] . "\n";
 	$bodyString .= "Transaction ID	,";
 	$bodyString .= $rowOrder[transaction_id] . "\n";
 	$bodyString .= "Order Number,";
@@ -47,7 +49,7 @@
 			FROM 
 				t_order_device
 			WHERE 1
-				AND t_order.idx = $idx
+				AND t_order_idx = $idx
 	";
 	$rsDevice = x_SQL($sql, $cntDB);
 	while ( $rowDevice = x_FETCH2($rsDevice) ) {
