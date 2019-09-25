@@ -23,12 +23,11 @@
 		<!-----------------------------------contents section-------------------------------------------------->
 		<div class="container">
 			<div class="col-lg-12 col-md-12 col-sm-12">
-				<div class="box-title margin-top-30">
-					<h2 class="size-20">Lookup</h2>
-				</div>
-
 				<div class="row">
 					<div class="col-lg-8 col-md-8 col-sm-8">
+						<div class="box-title margin-top-30">
+							<h2 class="size-20">Lookup</h2>
+						</div>
 
 						<form name='searchForm1' id='searchForm1' action="lookup_search.php" method="post" enctype="multipart/form-data">
 							<input type='hidden' name='search_type' id='search_type' value="order_number">
@@ -67,6 +66,9 @@
 						</form>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4">
+						<div class="box-title margin-top-30">
+							<h2 class="size-20">Show Order Details</h2>
+						</div>
 						<form name='searchForm1' id='searchForm1' action="lookup_search.php" method="post" enctype="multipart/form-data">
 							<input type='hidden' name='apple_apply' id='apple_apply' value="yes">
 							<input type='hidden' name='search_type' id='search_type' value="order_number">
