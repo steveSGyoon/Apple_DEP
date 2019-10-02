@@ -1,3 +1,13 @@
+create table t_login_try (
+	idx int unsigned NOT NULL auto_increment,
+	user_id varchar(128),
+	is_valid tinyint unsigned default 1,
+	PRIMARY KEY (idx)
+);
+alter table t_login_try add index user_id(user_id);
+alter table t_login_try add index is_valid(is_valid);
+
+
 
 create table t_user (
 	idx int unsigned NOT NULL auto_increment,
