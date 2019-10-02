@@ -142,21 +142,14 @@ function UpFileExecute($UpFileName, $UpFiles)
 /***********************************************************************************************/
 function XSSfilter($str)
 {
-	return $str; 
-
-	//echo "str=" . $str . "<br>";
 	//$filstr = "<script>, ja%0Av%0Aa%0As%0Ac%0Aript, %3Cscript, ScRiPt%20%0a%0d, %3Ealert, JaVaScRiPt, ScRiPt%20%0a%0d, JaVaScRiPt, javascript, vbscript, expression, applet, meta, xml, blink, link, style, script, embed, object, iframe, frame, frameset, ilayer, layer, bgsound, title, base, eval, innerHTML, charset, document, string, create, append, binding, alert, msgbox, refresh, embed, ilayer, applet, cookie, void, href, nabort, @import, +ADw, +AD4, aim:, %0da=eval, allowscriptaccess, xmlns:html, <html xmlns, xmlns:html=, http-equiv=refresh, http-equiv=refresh, x-scriptlet, echo(, 0%0d%0a%00, moz-binding, res://, #exec, background=, &#x, %u0, string.fromcharcode, firefoxurl, <br size=, list-style-image, acunetix_wvs, wvs-xss, lowsrc, dynsrc, behavior, activexobject, microsoft.xmlhttp, clsid:cafeefac-dec7-0000-0000-abcdeffedcba, application/npruntime-scriptable-plugin;deploymenttoolkit, onactivae, onafterprint, onafterupdate, onbefore, onbeforeactivate, oncopy, onbeforecopy, oncut, onbeforecut, onbeforedeactivate, onbeforeeditfocus, onbeforepaste, onbeforeprint, onbeforeunload, onbeforeupdate, onblur,  onbounce, oncellchange, onchange, onclick, oncontextmenu, oncontrolselect, ondataavailable, ondatasetchanged, ondatasetcomplete, ondblclick, ondeactivate, ondrag, ondragend, ondragenter, ondragleave, ondragover, ondragstart, ondrop, onerror,  onerrorupdate, onfilterchange, onfinish, onfocus, onfocusin, onfocusout,onhelp, onkeydown, onkeypress, onkeyup, onlayoutcomplete, onload, onlosecapture, onmousedown, onmouseenter, onmouseleave, onmousemove, onmouseout, onmouseover, onmouseup, onmousewheel, onmove, onmoveend, onmovestart, onpaste, onpropertychange, onreadystatechange, onreset, onscroll, onresize, onresizeend, onresizestart, onrowenter, onrowexit, onrowsdelete, onrowsinserted, onselect, onselectionchange, onselectstart, onstart,onstop, onsubmit, onunload "; //필터링 할 문자열 
-	$filstr = "<script>, ja%0Av%0Aa%0As%0Ac%0Aript, %3Cscript, ScRiPt%20%0a%0d, %3Ealert, JaVaScRiPt, ScRiPt%20%0a%0d, JaVaScRiPt, javascript, vbscript, expression, applet, meta, xml, blink, link, style, script, embed, object, iframe, frame, frameset, ilayer, layer, bgsound, title, base, eval, innerHTML, charset, document, string, create, append, binding, alert, msgbox, refresh, embed, ilayer, applet, cookie, void, href, nabort, @import, +ADw, +AD4, aim:, %0da=eval, allowscriptaccess, xmlns:html, <html xmlns, xmlns:html=, http-equiv=refresh, http-equiv=refresh, x-scriptlet, 0%0d%0a%00, moz-binding, res://, #exec, background=, &#x, %u0, string.fromcharcode, firefoxurl, <br size=, list-style-image, acunetix_wvs, wvs-xss, lowsrc, dynsrc, behavior, activexobject, microsoft.xmlhttp, clsid:cafeefac-dec7-0000-0000-abcdeffedcba, application/npruntime-scriptable-plugin;deploymenttoolkit, onactivae, onafterprint, onafterupdate, onbefore, onbeforeactivate, oncopy, onbeforecopy, oncut, onbeforecut, onbeforedeactivate, onbeforeeditfocus, onbeforepaste, onbeforeprint, onbeforeunload, onbeforeupdate, onblur,  onbounce, oncellchange, onchange, onclick, oncontextmenu, oncontrolselect, ondataavailable, ondatasetchanged, ondatasetcomplete, ondblclick, ondeactivate, ondrag, ondragend, ondragenter, ondragleave, ondragover, ondragstart, ondrop, onerror,  onerrorupdate, onfilterchange, onfinish, onfocus, onfocusin, onfocusout,onhelp, onkeydown, onkeypress, onkeyup, onlayoutcomplete, onload, onlosecapture, onmousedown, onmouseenter, onmouseleave, onmousemove, onmouseout, onmouseover, onmouseup, onmousewheel, onmove, onmoveend, onmovestart, onpaste, onpropertychange, onreadystatechange, onreset, onscroll, onresize, onresizeend, onresizestart, onrowenter, onrowexit, onrowsdelete, onrowsinserted, onselect, onselectionchange, onselectstart, onstart,onstop, onsubmit, onunload "; //필터링 할 문자열 
+	$filstr = "<script>, ja%0Av%0Aa%0As%0Ac%0Aript, %3Cscript, ScRiPt%20%0a%0d, %3Ealert, JaVaScRiPt, ScRiPt%20%0a%0d, JaVaScRiPt, javascript, vbscript, expression, applet, meta, xml, blink, link, style, script, embed, object, iframe, frame, frameset, ilayer, layer, bgsound, title, base, eval, innerHTML, charset, document, string, create, append, binding, alert, msgbox, refresh, embed, ilayer, applet, cookie, void, href, nabort, @import, +ADw, +AD4, aim:, %0da=eval, allowscriptaccess, xmlns:html, <html xmlns, xmlns:html=, http-equiv=refresh, http-equiv=refresh, x-scriptlet, echo(, 0%0d%0a%00, moz-binding, res://, #exec, background=, &#x, %u0, string.fromcharcode, firefoxurl, <br size=, list-style-image, acunetix_wvs, wvs-xss, lowsrc, dynsrc, behavior, activexobject, microsoft.xmlhttp, clsid:cafeefac-dec7-0000-0000-abcdeffedcba, application/npruntime-scriptable-plugin;deploymenttoolkit, onactivae, onafterprint, onafterupdate, onbefore, onbeforeactivate, oncopy, onbeforecopy, oncut, onbeforecut, onbeforedeactivate, onbeforeeditfocus, onbeforepaste, onbeforeprint, onbeforeunload, onbeforeupdate, onblur,  onbounce, oncellchange, onchange, onclick, oncontextmenu, oncontrolselect, ondataavailable, ondatasetchanged, ondatasetcomplete, ondblclick, ondeactivate, ondrag, ondragend, ondragenter, ondragleave, ondragover, ondragstart, ondrop, onerror,  onerrorupdate, onfilterchange, onfinish, onfocus, onfocusin, onfocusout,onhelp, onkeydown, onkeypress, onkeyup, onlayoutcomplete, onload, onlosecapture, onmousedown, onmouseenter, onmouseleave, onmousemove, onmouseout, onmouseover, onmouseup, onmousewheel, onmove, onmoveend, onmovestart, onpaste, onpropertychange, onreadystatechange, onreset, onscroll, onresize, onresizeend, onresizestart, onrowenter, onrowexit, onrowsdelete, onrowsinserted, onselect, onselectionchange, onselectstart, onstart,onstop, onsubmit, onunload "; //필터링 할 문자열 
 	if ($filstr != "") {
 		$otag = explode (",", $filstr); 
 		for ($i=0; $i < count($otag); $i++) { 
-			$str = eregi_replace($otag[$i], "_".$otag[$i]."_", $str); 
-			//echo "For i str=" . $str . " : " . $i . "<br>";
-			//if (!$str)
-				//echo "otag = " . $otag[$i] . "<br>";
+			$str = str_replace($otag[$i], "_".$otag[$i]."_", $str); 
 		}
 	}
-	//echo "str=" . $str . "<br>";
 
 	return $str; 
 }
@@ -164,27 +157,31 @@ function XSSfilter($str)
 
 //XSS 특수 문자(태그) 필터링
 function clearXSS($str) {
+	$avatag = "p,br"; //허용할 태그 리스트(화이트 리스트)
+	$str = str_replace("<", "&lt;", $str);
+	$str = str_replace(">", "&gt;", $str);
+	//$str = str_replace("\0", "", $str);
+
 	return $str; 
 
-	$avatag = "p,br"; //허용할 태그 리스트(화이트 리스트)
-	$str = eregi_replace("<", "&lt;", $str);
-	$str = eregi_replace(">", "&gt;", $str);
-	//$str = eregi_replace("\0", "", $str);
-
 	//허용할 태그를 지정한 경우 
+	/*
 	if ($avatag != "") {
 		$otag = explode (",", $avatag);
 
 		//허용할 태그 원상태로 변환 
 		for ($i = 0;$i < count($otag);$i++) { 
-			$str = eregi_replace("&lt;".$otag[$i]." ", "<".$otag[$i]." ", $str); 
-			$str = eregi_replace("&lt;".$otag[$i]."&gt;", "<".$otag[$i].">", $str); 
-			$str = eregi_replace(" "+$otag[$i]."&gt;", " ".$otag[$i].">", $str); 
-			$str = eregi_replace($otag[$i]."/&gt;", $otag[$i]."/>", $str); 
-			$str = eregi_replace("&lt;/".$otag[$i], "</".$otag[$i], $str); 
+			$str = preg_replace("&lt;".$otag[$i]." ", "<".$otag[$i]." ", $str); 
+			$str = preg_replace("&lt;".$otag[$i]."&gt;", "<".$otag[$i].">", $str); 
+			$str = preg_replace(" "+$otag[$i]."&gt;", " ".$otag[$i].">", $str); 
+			$str = preg_replace($otag[$i]."/&gt;", $otag[$i]."/>", $str); 
+			$str = preg_replace("&lt;/".$otag[$i], "</".$otag[$i], $str); 
 		}
 		return $str; 
 	}
+	else
+		return $str;
+	*/
 }
 
 function getNewPassword() {
