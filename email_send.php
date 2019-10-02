@@ -101,6 +101,6 @@
 </html>";
 
 	mail("stevesgyoon@gmail.com", $emailHeadLine, $bodytext, $mailheaders);
-	//mail($targetEmail, $emailHeadLine, $bodytext, $mailheaders);
+	mail($targetEmail, $emailHeadLine, $bodytext, $mailheaders);
 ?>
 

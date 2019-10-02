@@ -25,6 +25,9 @@
 		$check = $wp_hasher->CheckPassword($user_password, $row[user_password]);
 
 		if ($check) {
+			$sql = "update t_login_try set is_valid=0 where user_id='$user_id' ";
+			$rsTemp = x_SQL($DBNAME, $sql, $cntDB);
+
 			session_start();
 			$_SESSION['dep_userno'] = $row[idx];
 			$_SESSION['dep_userid'] = $row[user_id];
