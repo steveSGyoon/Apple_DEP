@@ -51,7 +51,8 @@
 	if ($is_member == -1) {
 		?>
 		<script>
-			alert ("user id is not correct.\nPlease try again.");
+			// alert ("user id is not correct.\nPlease try again.");
+			alert ("이메일 주소 또는 비밀번호를 잘못 입력 하셨습니다.\n다시 시도해 주시기 바랍니다.");
 			self.document.location.href	= "index.php";
 		</script>
 		<?php
@@ -107,7 +108,8 @@
 		else {
 			?>
 			<script>
-				alert ("사용자정보를 <?=$rowTry[0]?>회 잘못 입력 하셨습니다.\n5회 이상 사용자정보를 잘못 입력 하시면 계정 사용이 정지 됩니다.\n다시 시도해 주시기 바랍니다.");
+				// alert ("사용자정보를 <?=$rowTry[0]?>회 잘못 입력 하셨습니다.\n5회 이상 사용자정보를 잘못 입력 하시면 계정 사용이 정지 됩니다.\n다시 시도해 주시기 바랍니다.");
+				alert ("이메일 주소 또는 비밀번호를 잘못 입력 하셨습니다.\n다시 시도해 주시기 바랍니다.");
 				self.document.location.href	= "index.php";
 			</script>
 			<?php
