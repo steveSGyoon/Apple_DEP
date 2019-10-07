@@ -37,7 +37,7 @@
 							<form name='memberLoginForm' class="nomargin sky-form" method="post" action="mLoginPS.php" autocomplete="off">
 								<div class="row">
 									<div class="col-md-12">
-										<label>아이디 *</label>
+										<label>이메일 주소 *</label>
 										<label class='input margin-bottom-6'>
 											<i class='ico-append fa fa-user'></i>
 											<input type='text' class='form-control' required size=30 name='user_id' id='user_id' style="height:45px;">
