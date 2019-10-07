@@ -91,7 +91,19 @@
 				return;
 			}
 
-			if ( action!='delete' && (password1 != password2) ) {
+
+
+			if (action!='delete' && password1.length < 8) {
+				alert("비밀번호는 영문/숫자/특수문자 혼합 8자리 이상이어야 합니다");
+				return;
+			}
+
+			if (action!='delete' && !password1.match(/[a-zA-Z0-9]*[^a-zA-Z0-9\n]+[a-zA-Z0-9]*$/)) {
+				alert("비밀번호는 영문/숫자/특수문자 혼합 8자리 이상이어야 합니다");
+				return;
+			}
+
+			if (action!='delete' && (password1 != password2)) {
 				alert("Please confirm your password.");
 				return;
 			}
