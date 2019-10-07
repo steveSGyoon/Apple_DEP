@@ -27,7 +27,7 @@
 					<input type='hidden' name='action' id='action' value='new'>
 					<div class="row">
 						<div class="col-lg-6 col-md-6 col-sm-6">
-							<label>ID *</label>
+							<label>Email Address *</label>
 							<label class='input margin-bottom-6'>
 								<i class='ico-append fa fa-user'></i>
 								<input type='text' class='form-control' required size=30 name='user_id' id='user_id' style="height:45px;">
