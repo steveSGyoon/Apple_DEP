@@ -62,7 +62,7 @@
 							<tr bgcolor='#ffffff'>
 								<td><?=$row[dep_customer_id]?></td>
 								<td><?=$row[order_number]?></td>
-								<td><?=$row[order_number]?></td>
+								<td><?=$row[completed_date]?></td>
 								<td><?=$status?></td>
 							</tr>
 							<?php
@@ -111,7 +111,7 @@
 							<tr bgcolor='#ffffff'>
 								<td><?=$row[dep_customer_id]?></td>
 								<td><?=$row[order_number]?></td>
-								<td><?=$row[order_number]?></td>
+								<td><?=$row[completed_date]?></td>
 								<td><?=$status?></td>
 							</tr>
 							<?php
@@ -162,7 +162,7 @@
 							<tr bgcolor='#ffffff'>
 								<td><?=$row[dep_customer_id]?></td>
 								<td><?=$row[order_number]?></td>
-								<td><?=$row[order_number]?></td>
+								<td><?=$row[completed_date]?></td>
 								<td><?=$status?></td>
 							</tr>
 							<?php
@@ -203,7 +203,7 @@
 							<tr bgcolor='#ffffff'>
 								<td><?=$row[dep_customer_id]?></td>
 								<td><?=$row[order_number]?></td>
-								<td><?=$row[order_number]?></td>
+								<td><?=$row[completed_date]?></td>
 								<td><?=$status?></td>
 							</tr>
 							<?php
