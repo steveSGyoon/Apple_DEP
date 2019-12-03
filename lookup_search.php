@@ -102,7 +102,7 @@
 								<td><?=$row[order_date]?></td>
 								<td><?=$row[order_type]?></td>
 								<td>
-									<a href="<?=$view_url?>" onclick="popupOpen(event, this.href, 'orderView', 500, 450)">
+									<a href="<?=$view_url?>" onclick="popupOpen(event, this.href, 'orderView', 800, 450)">
 									<button type="button" class="btn btn-sm btn-default">View</button>
 									</a>
 								</td>
