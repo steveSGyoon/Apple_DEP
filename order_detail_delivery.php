@@ -51,6 +51,8 @@
 								<thead>
 									<tr class="info">
 										<th class="text-center">Device ID</th>
+										<th class="text-center">Part Name</th>
+										<th class="text-center">Part Desc.</th>
 										<th class="text-center">Asset Tag</th>
 										<th class="text-center">Posst Status</th>
 									</tr>
@@ -76,6 +78,8 @@
 									?>
 									<tr bgcolor='#ffffff'>
 										<td><?=$row[device_id]?></td>
+										<td><?=$row[part_name]?></td>
+										<td><?=$row[part_desc]?></td>
 										<td><?=$row[asset_tag]?></td>
 										<td>
 											<?=$postInfo?>
