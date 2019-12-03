@@ -64,6 +64,12 @@
 							<input type='text' size=50 required name='search_val' id='search_val' placeholder="Ship Date : 2019-05-26" style="height:35px;">
 							<button type='submit' class="btn btn-warning btn-sm size-15">Search</button>
 						</form>
+
+						<form name='searchForm7' id='searchForm7' action="lookup_search.php" method="post" enctype="multipart/form-data">
+							<input type='hidden' name='search_type' id='search_type' value="device_id">
+							<input type='text' size=50 required name='search_val' id='search_val' placeholder="Device ID" style="height:35px;">
+							<button type='submit' class="btn btn-warning btn-sm size-15">Search</button>
+						</form>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4">
 						<div class="box-title margin-top-30">
