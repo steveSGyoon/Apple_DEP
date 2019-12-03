@@ -91,8 +91,12 @@
 								else if ($col == 8)
 									$ship_date[$HPindex] = $excelValue[$row][$col];
 								else if ($col == 9)		// t_order_device
+									$ApplePartName[$HPindex] = $excelValue[$row][$col];
+								else if ($col == 10)		// t_order_device
+									$ApplePartDesc[$HPindex] = $excelValue[$row][$col];
+								else if ($col == 11)		// t_order_device
 									$device_id[$HPindex] = $excelValue[$row][$col];
-								else if ($col == 10)	// t_order_device
+								else if ($col == 12)	// t_order_device
 									$asset_tag[$HPindex] = $excelValue[$row][$col];
 							}
 							$HPindex++;
@@ -191,9 +195,9 @@
 								if ($order_idx) {
 									$sql = "INSERT INTO 
 												t_order_device
-												(t_order_idx, delivery_number, device_id, asset_tag) 
+												(t_order_idx, delivery_number, part_name, part_desc, device_id, asset_tag) 
 											VALUES 
-												($order_idx, '$delivery_number[$iy]', '$device_id[$iy]', '$asset_tag[$iy]')
+												($order_idx, '$delivery_number[$iy]', '$ApplePartName[$iy]', '$ApplePartDesc[$iy]', '$device_id[$iy]', '$asset_tag[$iy]')
 									"; 
 									$rs = x_SQL($sql, $cntDB);
 									$error_msg =  "[$iy] Success !! - $dep_customer_id[$iy] <br />";

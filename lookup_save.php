@@ -55,6 +55,10 @@
 	while ( $rowDevice = x_FETCH2($rsDevice) ) {
 		$bodyString .= "Delivery Number,";
 		$bodyString .= $rowDevice[delivery_number] . "\n";
+		$bodyString .= "Apple Part Name,";
+		$bodyString .= $rowDevice[part_name] . "\n";
+		$bodyString .= "Apple Part Desc,";
+		$bodyString .= $rowDevice[part_desc] . "\n";
 		$bodyString .= "Device ID,";
 		$bodyString .= $rowDevice[device_id] . "\n";
 		$bodyString .= "Asset Tag,";

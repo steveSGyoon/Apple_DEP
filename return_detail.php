@@ -63,7 +63,11 @@
 							while ( $row = x_FETCH2($rs) ) {
 								?>
 								<tr bgcolor='#ffffff'>
-									<td><?=$row[device_id]?></td>
+									<td>
+										<?=$row[device_id]?><br />
+										<?=$row[part_name]?><br />
+										<?=$row[part_desc]?>
+									</td>
 									<td><?=$row[asset_tag]?></td>
 								</tr>
 								<?php
