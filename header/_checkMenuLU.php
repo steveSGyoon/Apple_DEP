@@ -1,4 +1,4 @@
 <?php
-	if (!$_isAdmin)
+	if (!$_isLU)
 		header('Location: /');
 ?>
