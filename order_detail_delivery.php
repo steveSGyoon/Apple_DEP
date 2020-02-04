@@ -7,7 +7,7 @@
 	include "header/header.php";
 	include "header/functionsY.php";
 	include "header/_checkLogin.php";
-	include "header/_checkOR.php";
+	include "header/_checkMenuOR.php";
 
 	$cntDB = DBCONNECT_start();
 
