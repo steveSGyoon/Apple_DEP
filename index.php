@@ -7,13 +7,8 @@
 	include "header/header.php";
 	include "header/functionsY.php";
 
-	if ($_isLogin) {
-		?>
-		<script type="text/javascript">
-			document.location.href	= "indexMain.php";
-		</script>
-		<?php
-	}
+	if ($_isLogin)
+		header('Location: /indexMain.php');
 
 	$cntDB = DBCONNECT_start();
 ?>
