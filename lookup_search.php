@@ -34,11 +34,11 @@
 	}
 	else if ($search_type == "ship_date") {
 		$search_text .= " of Ship Date ";
-		$whereQry = "AND dep_order.order_number IN (SELECT DISTINCT (order_number) FROM  t_order_device WHERE ship_date LIKE '%$search_val%')";
+		$whereQry = "AND dep_order.idx IN (SELECT DISTINCT (t_order_idx) FROM  t_order_device WHERE ship_date LIKE '%$search_val%')";
 	}
 	else if ($search_type == "device_id") {
 		$search_text .= " of Device ID ";
-		$whereQry = "AND dep_order.order_number IN (SELECT DISTINCT (order_number) FROM  t_order_device WHERE device_id LIKE '%$search_val%')";
+		$whereQry = "AND dep_order.idx IN (SELECT DISTINCT (t_order_idx) FROM  t_order_device WHERE device_id LIKE '%$search_val%')";
 	}
 ?>
 </head>
