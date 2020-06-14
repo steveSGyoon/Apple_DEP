@@ -69,6 +69,10 @@
 									<a href="override_detail.php?idx=<?=$row[idx]?>" onclick="popupOpen(event, this.href, 'orderView', 500, 450)">
 									<button type="button" class="btn btn-sm btn-default">View</button>
 									</a>
+
+									<a href="Javascript:delete_order(<?=$row[idx]?>)">
+									<button type="button" class="btn btn-xs btn-warning">Delete</button>
+									</a>
 								</td>
 							</tr>
 							<?php
@@ -95,5 +99,36 @@
 	include "subHeader/footerJS.php";
 	DBCLOSE_end($cntDB);
 	?>
+
+	<script type="text/javascript">
+		function delete_order(order_idx) {
+            if (confirm( "정말로 삭제 하시겠습니까 ?" )) {
+                $.ajax({
+                    url:'order_delete.php',
+                    dataType: "json",
+                    type : "POST",
+                    data: {
+                        "order_idx" : order_idx
+                    },
+
+                    success:function(reponse){
+                        switch (reponse['result'])
+                        {
+                            case "fail":
+                                alert(reponse['error_msg']);
+                                break;
+                            case "success":
+                                alert("삭제 되었습니다.");
+                                window.location.reload();
+                                break;
+                        }
+                    },
+                    error:function(){
+                        alert("Server Error !!!");
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>
