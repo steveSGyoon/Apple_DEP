@@ -191,6 +191,26 @@
 									";
 									$rowCheck4 = x_FETCH($chkSQL, $cntDB);
 									$order_idx = $rowCheck4[idx];
+
+									if ( $order_type[$iy] == "OV" ) {
+										$sql = "UPDATE t_order SET status=0, is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
+										$rs1 = x_SQL($sql, $cntDB0);
+
+										$sql = "UPDATE t_order_device SET is_valid=0 WHERE t_order_idx = $order_idx"; 
+										$rs2 = x_SQL($sql, $cntDB0);
+
+										$transaction_id = date('Ymd') . "-" . str_replace("\0", "", time().'-'.rand(0,10000));
+										$sql = "INSERT INTO 
+													t_order
+													(order_number, transaction_id, order_type, dep_customer_id, dep_reseller_id, 
+													ship_to, po_number, order_date, ship_date)
+												VALUES 
+													('$order_number[$iy]', '$transaction_id', '$order_type[$iy]', '$dep_customer_id[$iy]', '$dep_reseller_id[$iy]', 
+													'$ship_to[$iy]', '$po_number[$iy]', '$order_date[$iy]', '$ship_date[$iy]')
+										"; 
+										$rs = x_SQL($sql, $cntDB);
+										$order_idx = mysqli_insert_id($cntDB);
+									}
 								}
 
 								if ($order_idx) {
