@@ -11,6 +11,7 @@
 	include "header/_checkAdmin.php";
 
 	$excelFileName = $_POST["excelFileName"];
+	$order_id = $_POST["order_id"];
 
 	try {
 		$objPHPExcel = PHPExcel_IOFactory::load($excelFileName);
@@ -167,10 +168,10 @@
 									$transaction_id = date('Ymd') . "-" . str_replace("\0", "", time().'-'.rand(0,10000));
 									$sql = "INSERT INTO 
 												t_order
-												(order_number, transaction_id, order_type, dep_customer_id, dep_reseller_id, 
+												(order_id, order_number, transaction_id, order_type, dep_customer_id, dep_reseller_id, 
 												ship_to, po_number, order_date, ship_date)
 											VALUES 
-												('$order_number[$iy]', '$transaction_id', '$order_type[$iy]', '$dep_customer_id[$iy]', '$dep_reseller_id[$iy]', 
+												('$order_id', '$order_number[$iy]', '$transaction_id', '$order_type[$iy]', '$dep_customer_id[$iy]', '$dep_reseller_id[$iy]', 
 												'$ship_to[$iy]', '$po_number[$iy]', '$order_date[$iy]', '$ship_date[$iy]')
 									"; 
 									$rs = x_SQL($sql, $cntDB);
@@ -178,7 +179,8 @@
 								}
 								else {
 									$chkSQL = "SELECT
-													idx
+													idx,
+													order_id
 												FROM 
 													t_order 
 												WHERE 1
@@ -188,11 +190,15 @@
 													AND dep_reseller_id = '$dep_reseller_id[$iy]'
 													AND ship_to = '$ship_to[$iy]'
 													AND po_number = '$po_number[$iy]'
+												ORDER BY
+													insert_date DESC
+												LIMIT
+													0, 1
 									";
 									$rowCheck4 = x_FETCH($chkSQL, $cntDB);
 									$order_idx = $rowCheck4[idx];
 
-									if ( $order_type[$iy] == "OV" ) {
+									if ( ($order_type[$iy] == "OV") && ($rowCheck4[order_id] != $order_id) ) {
 										$sql = "UPDATE t_order SET status=0, is_valid=0, edit_date=now() WHERE idx = $order_idx"; 
 										$rs1 = x_SQL($sql, $cntDB0);
 
@@ -202,10 +208,10 @@
 										$transaction_id = date('Ymd') . "-" . str_replace("\0", "", time().'-'.rand(0,10000));
 										$sql = "INSERT INTO 
 													t_order
-													(order_number, transaction_id, order_type, dep_customer_id, dep_reseller_id, 
+													(order_id, order_number, transaction_id, order_type, dep_customer_id, dep_reseller_id, 
 													ship_to, po_number, order_date, ship_date)
 												VALUES 
-													('$order_number[$iy]', '$transaction_id', '$order_type[$iy]', '$dep_customer_id[$iy]', '$dep_reseller_id[$iy]', 
+													('$order_id', '$order_number[$iy]', '$transaction_id', '$order_type[$iy]', '$dep_customer_id[$iy]', '$dep_reseller_id[$iy]', 
 													'$ship_to[$iy]', '$po_number[$iy]', '$order_date[$iy]', '$ship_date[$iy]')
 										"; 
 										$rs = x_SQL($sql, $cntDB);

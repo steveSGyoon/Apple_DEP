@@ -39,6 +39,10 @@
 	}
 
 	$cntDB = DBCONNECT_start();
+
+	if (!$dep_userno)
+		$dep_userno = 0;
+	$order_id = "o" . date("mdHis") . "_" . sprintf("%03d", $dep_userno);
 ?>
 </head>
 
@@ -96,6 +100,7 @@
 						<div class="row">
 							<div class="col-md-12 text-right">
 								<input type='hidden' name='excelFileName' id='excelFileName' value='<?=$excelFileName?>'>
+								<input type='hidden' name='order_id' id='order_id' value='<?=$order_id?>'>
 								<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Upload Confirm</button>
 							</div>
 						</div>
