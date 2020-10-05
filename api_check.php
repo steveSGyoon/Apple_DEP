@@ -37,7 +37,9 @@
 		$response = doHttpPost($check_url, $paramMap);
 		$result = json_decode($response, true);
 
-//echo $response;
+//echo $check_url . "<BR>";
+//echo $rowOrder[ship_to] . "<BR>";
+//echo "response=" . $response . "<BR><BR>";
 /*
 
 
@@ -128,6 +130,8 @@
 		$status = $result['statusCode'];
 		$deviceEnrollmentTransactionId = $result['deviceEnrollmentTransactionID'];
 		$completed_on = $result['completedOn'];
+
+		//echo "status=" . $status . "<br><br>";
 		if ($status == "COMPLETE" || $status == "COMPLETE_WITH_ERRORS") {
 			$transactionId = $result['transactionId'];
 
@@ -218,6 +222,7 @@
 							VALUES 
 								( $order_idx, 0, '$paramMap', '$errorCode', '$deviceEnrollmentTransactionId', '$errorMessage', \"$response0\" )
 					"; 
+					//echo "1=" . $sql . "<br>";
 					$rs = x_SQL($sql, $cntDB);
 				}
 			}
@@ -235,6 +240,23 @@
 							VALUES 
 								( $order_idx, 0, '$paramMap', '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
 					"; 
+					//echo "2=" . $sql . "<br>";
+					$rs = x_SQL($sql, $cntDB);
+				}
+				else {
+					$errorCode = "No ErrorCode";
+					$transactionId = $result['transactionId'];
+					$errorMessage = $result['errorMessage'];		// . " " . $result['enrollDeviceErrorResponse']['statusCode'];
+
+					// t_api_check_result
+					$response0 = str_replace( "\"","'", $response );
+					$sql = "INSERT INTO 
+								t_api_check_result
+								( t_order_idx, is_success, send_data, errorCode, transactionId, errorMessage, response )
+							VALUES 
+								( $order_idx, 0, '$paramMap', '$errorCode', '$transactionId', '$errorMessage', \"$response0\" )
+					"; 
+					//echo "2=" . $sql . "<br>";
 					$rs = x_SQL($sql, $cntDB);
 				}
 			}
